@@ -4,15 +4,14 @@ import express = require('express');
 const getPaws = async (req:express.Request, res:express.Response) => {
   try {
     const paws = await Paws.find();
-    res.status(200);
-    res.send(paws);
+    res.status(200).send(paws);
   } catch (error) {
     console.log(error);
     res.status(500);
   }
 };
 
-const createPaws = async (req:express.Request, res:express.Response) => {
+const postPaws = async (req:express.Request, res:express.Response) => {
   try {
     const {
       lostOrFound,
@@ -24,6 +23,7 @@ const createPaws = async (req:express.Request, res:express.Response) => {
       long,
       email,
     } = req.body;
+
     const paws = await Paws.create({
       lostOrFound,
       picture,
@@ -34,8 +34,7 @@ const createPaws = async (req:express.Request, res:express.Response) => {
       long,
       email,
     });
-    res.status(201);
-    res.send(paws);
+    res.status(201).send(paws);
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -52,8 +51,18 @@ const deletePaws = async (req:express.Request, res:express.Response) => {
   }
 };
 
+const putPaws = async (req:express.Request, res:express.Response) => {
+  try {
+    //put here
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+  }
+}
+
 export default {
   getPaws,
-  createPaws,
+  postPaws,
   deletePaws,
+  putPaws
 };
