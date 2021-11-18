@@ -1,5 +1,4 @@
-const dotenv = require("dotenv");
-
+import dotenv from "dotenv";
 dotenv.config();
 
 const audience = process.env.AUTH0_AUDIENCE;
@@ -33,7 +32,7 @@ if (!clientOriginUrl) {
 
 const clientOrigins = ["http://localhost:3000"];
 
-module.exports = {
+export {
   audience,
   domain,
   serverPort,

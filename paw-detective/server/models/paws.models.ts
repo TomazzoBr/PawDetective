@@ -1,8 +1,20 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const PawsSchema = new Schema({
-  lostOrFound: { type: String, required: true },
+interface PawInterface {
+  lostOrFound: Boolean,
+  picture: String,
+  animal: String,
+  description: String,
+  date: Date,
+  location: String,
+  lat: Number,
+  long: Number,
+  email: String
+}
+
+const PawsSchema = new Schema<PawInterface>({
+  lostOrFound: { type: Boolean, required: true },
   picture: { type: String, required: true },
   animal: { type: String, required: true },
   description: { type: String, required: true },
@@ -13,5 +25,4 @@ const PawsSchema = new Schema({
   email: { type: String, required: true },
 });
 
-module.exports = mongoose.model("Paws", PawsSchema);
-//location object lat & long
+export default mongoose.model("Paws", PawsSchema);

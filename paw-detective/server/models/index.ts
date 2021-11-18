@@ -1,8 +1,5 @@
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/db_paws", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+import mongoose from "mongoose";
+mongoose.connect("mongodb://localhost/db_paws");
 
 const db = mongoose.connection;
 
@@ -13,4 +10,4 @@ db.once("open", function () {
   console.log("we are connected to the database!");
 });
 
-module.exports = db;
+export default db;

@@ -1,6 +1,7 @@
-const Paws = require("../models/paws.models");
+import Paws from "../models/paws.models";
+import express = require('express');
 
-const getPaws = async (req, res) => {
+const getPaws = async (req:express.Request, res:express.Response) => {
   try {
     const paws = await Paws.find();
     res.status(200);
@@ -11,7 +12,7 @@ const getPaws = async (req, res) => {
   }
 };
 
-const createPaws = async (req, res) => {
+const createPaws = async (req:express.Request, res:express.Response) => {
   try {
     const {
       lostOrFound,
@@ -41,7 +42,7 @@ const createPaws = async (req, res) => {
   }
 };
 
-const deletePaws = async (req, res) => {
+const deletePaws = async (req:express.Request, res:express.Response) => {
   try {
     await Paws.deleteOne({ id: req.params.id });
     res.sendStatus(204);
@@ -51,7 +52,7 @@ const deletePaws = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   getPaws,
   createPaws,
   deletePaws,
