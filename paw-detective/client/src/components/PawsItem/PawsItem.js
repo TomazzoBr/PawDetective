@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./PawsItem.css";
 import apiService from "../../ApiService";
 
-const PawsItem = ({ paw, setPaws, setFilteredPaws, user }) => {
+const PawsItem = ({ paw, setPaws, setFilteredPaws }) => {
   const deletePawsHandler = async () => {
     await apiService.deletePaws(paw._id);
     setPaws((prev) =>

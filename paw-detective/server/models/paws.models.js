@@ -14,4 +14,3 @@ const PawsSchema = new Schema({
 });
 
 module.exports = mongoose.model("Paws", PawsSchema);
-//location object lat & long
