@@ -2,15 +2,15 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 interface PawInterface {
-  lostOrFound: Boolean,
-  picture: String,
-  animal: String,
-  description: String,
-  date: Date,
-  location: String,
-  lat: Number,
-  long: Number,
-  email: String
+  lostOrFound: boolean,
+  picture: string,
+  animal: string,
+  description: string,
+  date: any,
+  location: string,
+  lat: number,
+  long: number,
+  email: string
 }
 
 const PawsSchema = new Schema<PawInterface>({
