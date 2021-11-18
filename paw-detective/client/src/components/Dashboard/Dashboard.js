@@ -1,30 +1,24 @@
-import Header from "../Header/Header";
-import PawsList from "../PawsList/PawList";
-import apiService from "../../ApiService";
-import { useState, useEffect } from "react";
+import "./../../styles/Dashboard.css";
+
 import { useAuth0 } from "@auth0/auth0-react";
+import { useHistory } from "react-router";
+import { useState, useEffect, useContext } from "react";
+
+import apiService from "../../services/ApiService";
+import globalContext from "../../services/globalContext";
+
+import PawsList from "./PawsList/PawList";
+import Header from "./Header/Header";
 import Map from "../Map/Map";
 
-import { useHistory } from "react-router";
-import "./Dashboard.css";
-
 const Dashboard = () => {
+
+  const customProps = useContext(globalContext);
+  const {paws, filteredPaws, filterPaws} = customProps;
+
   const history = useHistory();
-  const [paws, setPaws] = useState([]);
-  const [filteredPaws, setFilteredPaws] = useState([]);
   const { user } = useAuth0();
 
-  const filterPaws = (lostOrFound) => {
-    if (lostOrFound === "Lost") {
-      const lostList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
-      return setFilteredPaws(lostList);
-    }
-    if (lostOrFound === "Found") {
-      const foundList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
-      return setFilteredPaws(foundList);
-    }
-    return setFilteredPaws(paws);
-  };
   useEffect(() => {
     apiService.getPaws().then((paws) => {
       const sortedPaws = paws.sort((a, b) => {

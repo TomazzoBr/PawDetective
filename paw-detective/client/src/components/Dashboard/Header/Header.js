@@ -1,4 +1,4 @@
-import "./Header.css";
+import "./../../../styles/Header.css";
 import { FaPaw } from "react-icons/fa";
 
 import AuthNav from "../../Account-setup/AuthNav";

@@ -1,4 +1,4 @@
-import "./PawsProfile.css";
+import "./../../styles/PawsProfile.css";
 import { FaHome } from "react-icons/fa";
 import { useLocation, useHistory } from "react-router-dom";
 import Map from "../Map/Map";

@@ -1,14 +1,21 @@
-import "./Maps.css";
+import "./../../styles/Map.css";
+
 import { GoogleMap, InfoWindow } from "@react-google-maps/api";
-import { useCallback, useState } from "react";
+
 import { formatRelative } from "date-fns";
-import { useRef } from "react";
-import MapMarker from "./MapMarker";
 import { FaLocationArrow } from "react-icons/fa";
 
+import { useCallback, useState, useRef, useContext } from "react";
+
+import MapMarker from "./MapMarker";
+import globalContext from '../../services/globalContext'
+
 const Map = ({ setLat, setLong, profileMarker, pawsArray }) => {
-  const [marker, setMarker] = useState(null);
-  const [selected, setSelected] = useState(null);
+
+  const {customProps} = useContext(globalContext);
+  const {marker, selected} = customProps;
+
+  const mapRef = useRef();
 
   const markersArray =
     pawsArray &&
@@ -24,7 +31,8 @@ const Map = ({ setLat, setLong, profileMarker, pawsArray }) => {
         }}
       />
     ));
-  const onMapClick = useCallback(
+
+  const onMapClick = useCallback( //Why use callback instead of just making a cb call?
     (e) => {
       setMarker(() => ({
         lat: e.latLng.lat(),
@@ -49,7 +57,6 @@ const Map = ({ setLat, setLong, profileMarker, pawsArray }) => {
     lng: -6.26031,
   };
 
-  const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
@@ -79,6 +86,7 @@ const Map = ({ setLat, setLong, profileMarker, pawsArray }) => {
       </button>
     );
   };
+
   return (
     <div className="map-container">
       <Locate panTo={panTo} />

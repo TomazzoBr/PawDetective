@@ -1,17 +1,14 @@
+import "./../../../../styles/PawsItem.css";
 import { Link } from "react-router-dom";
-import "./PawsItem.css";
-import apiService from "../../ApiService";
+import apiService from "../../services/ApiService";
+import { useContext} from 'react'
+
+import globalContext from '../../../../services/globalContext'
 
 const PawsItem = ({ paw, setPaws, setFilteredPaws, user }) => {
-  const deletePawsHandler = async () => {
-    await apiService.deletePaws(paw._id);
-    setPaws((prev) =>
-      prev.filter((notDeletedPaw) => notDeletedPaw._id !== paw._id)
-    );
-    setFilteredPaws((prev) =>
-      prev.filter((notDeletedPaw) => notDeletedPaw._id !== paw._id)
-    );
-  };
+
+  const customProps = useContext(globalContext);
+  const {deletePawsHandler} = customProps;
 
   return (
     <li key={paw.picture}>
