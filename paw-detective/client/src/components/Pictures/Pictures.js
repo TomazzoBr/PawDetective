@@ -13,7 +13,7 @@ const PicturesUpload = () => {
       <div>
         <progress value={progress} max="100" />
       </div>
-      <input type="file" onChange={(e)=>handleChange(e)} />
+      <input type="file" name="picture" onChange={(e)=>handleChange(e)} />
 
       <div>
         <img
@@ -22,6 +22,7 @@ const PicturesUpload = () => {
           alt="firebase-pic"
         />
       </div>
+      
       <div className="pictures-button" onClick={()=>handleUpload()}>
         Upload Picture
       </div>

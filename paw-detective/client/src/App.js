@@ -5,16 +5,24 @@ import { Routes, Route } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
 import { useState, useEffect } from "react";
 
-import GlobalContext from "./services/globalContext";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 import ApiService from "./services/ApiService";
+import GlobalContext from "./services/globalContext";
 import { storage } from "./services/firebaseConfig";
+// import { addTodo, completed, decrement, increment } from './actions'; //actions to dispatch
 
 import Dashboard from "./components/Dashboard/Dashboard";
 import PawsProfile from "./components/PawsProfile/PawsProfile";
 import PawsForm from "./components/PawsForm/PawsForm";
-import ProtectedRoute from "./components/auth/Protected-route";
+// import ProtectedRoute from "./components/auth/Protected-route";
 
 function App() {
+
+
+
+
   // const {
   //   user: { email },
   //   getAccessTokenSilently,
@@ -33,13 +41,23 @@ function App() {
   const [url, setUrl] = useState("");
   const [progress, setProgress] = useState(0);
 
-  const [lostOrFound, setLostorFound] = useState("Lost");
-  const [picture, setPicture] = useState("");
-  const [animal, setAnimal] = useState("Dog");
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [lat, setLat] = useState("");
-  const [long, setLong] = useState("");
+  // Should have all those properties in one object
+  // const [lostOrFound, setLostorFound] = useState("Lost");
+  // const [picture, setPicture] = useState("");
+  // const [animal, setAnimal] = useState("Dog");
+  // const [description, setDescription] = useState("");
+  // const [location, setLocation] = useState("");
+  // const [lat, setLat] = useState("");
+  // const [long, setLong] = useState("");
+  const [animalForm, setAnimal] = useState({
+    lostOrFound: false,
+    picture: "",
+    animal: "",
+    description: "",
+    location: "",
+    lat: "",
+    long: ""
+  });
 
   const [marker, setMarker] = useState(null);
   const [selected, setSelected] = useState(null);
@@ -49,9 +67,10 @@ function App() {
   ///////////////////////////
   ///////FUNCTIONS///////////
   ///////////////////////////
-  const handleChange = (event) => {
-    if (event.target.files[0]) {
-      setImage(event.target.files[0]);
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      formHandler (e)
+      // setImage(event.target.files[0]); //Have to change this one for setAnimal
     }
   };
   const handleUpload = () => { //This one needs firebase config to upload pictures
@@ -76,7 +95,7 @@ function App() {
             .getDownloadURL()
             .then((url) => {
               setUrl(url);
-              setPicture(url);
+              formHandler(url);
             });
         }
       );
@@ -108,22 +127,20 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!description && !picture && !location) {
+    if (!animalForm.description && !animalForm.picture && !animalForm.location) {
       alert("please fill in all the fields");
       return;
     }
-    postPawHandler(
-      lostOrFound,
-      picture,
-      animal,
-      description,
-      location,
-      +lat,
-      +long
-    );
-    setPicture("");
-    setDescription("");
-    setLocation("");
+    postPawHandler(animalForm);
+    setAnimal({
+      lostOrFound: false,
+      picture: "",
+      animal: "",
+      description: "",
+      location: "",
+      lat: "",
+      long: ""
+    });
   };
 
   const filterPaws = (lostOrFound) => {
@@ -161,6 +178,32 @@ function App() {
   };
 
   ///////////////////////////
+  ///////Custom Fn///////////
+  ///////////////////////////
+  const formHandler = (e) => {
+    //We just need to work on the lat,long that come from Map.js
+    console.log(e)
+    const name = e.target.name;
+    let value = e.target.value;
+    console.log(name, value)
+    if (name === 'lostOrFound') {
+      if (value === 'Lost') {
+        value = true
+      } else {
+        value = false
+      }
+    }
+    if (name === 'picture') {
+      value = e.target.files[0]
+    }
+    const animal = {...animalForm}
+    
+    animal[name] = value
+    setAnimal(animal)
+  }
+
+
+  ///////////////////////////
   /////////EXTRAS////////////
   ///////////////////////////
   const { isLoaded, loadError } = useLoadScript({
@@ -179,26 +222,21 @@ function App() {
     url,
     progress,
     handleChange,
-    handleUpload,
-    setPicture, //States + fn from Pictures Component
-    lostOrFound,
-    animal,
-    description,
-    location,
-    handleSubmit,
-    setLostorFound,
-    setAnimal,
-    setLocation,
-    setDescription, //States + fn from PawsForm Component
+    handleUpload,//States + fn from Pictures Component
+
+    animalForm,
+    formHandler,
+    handleSubmit, //States + fn from PawsForm Component
+
     marker,
     selected,
-    setLat,
-    setLong,
     setMarker,
     setSelected, //States from Map Component
+
     paws,
     filteredPaws,
     filterPaws, //States + fn from Dashboard Component
+
     deletePawsHandler,
     setPaws,
     setFilteredPaws, //Fn from PawsItem Component
@@ -210,7 +248,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard/>} />
 
-          <Route exact path="/profile/:id" element={PawsProfile} key={document.location.href} />
+          <Route exact path="/profile/:id" element={<PawsProfile/>} key={document.location.href} />
 
           <Route exact path="/form" element={<PawsForm/>} />
 
