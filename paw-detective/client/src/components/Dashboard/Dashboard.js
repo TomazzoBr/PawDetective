@@ -9,13 +9,18 @@ import globalContext from "../../services/globalContext";
 import Header from "./Header/Header";
 import Map from "../Map/Map";
 import PawsList from "./PawsList/PawList";
+import PawsProfile from "../PawsProfile/PawsProfile";
 
 const Dashboard = () => {
   const { customProps } = useContext(globalContext);
-  const { filterPaws } = customProps;
+  const { filterPaws, selectedAnimal } = customProps;
 
   const navigate = useNavigate();
   // const { user } = useAuth0();
+
+  const modalAnimal = (selectedAnimal === 0) 
+    ? null 
+    : <PawsProfile/>
 
   return (
     <div className="dashboard">
@@ -52,6 +57,9 @@ const Dashboard = () => {
           <PawsList />
         </div>
       </div>
+
+      {modalAnimal}
+      {/* Here goes the modal of animal when click */}
     </div>
   );
 };

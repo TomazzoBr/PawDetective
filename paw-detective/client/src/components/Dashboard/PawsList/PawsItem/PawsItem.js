@@ -8,7 +8,7 @@ import globalContext from '../../../../services/globalContext'
 const PawsItem = ({ paw, key }) => {
 
   const customProps = useContext(globalContext);
-  const {deletePawsHandler} = customProps;
+  const {deletePawsHandler, changeAnimalModal} = customProps;
 
   return (
     <li key={paw.picture}>
@@ -17,8 +17,11 @@ const PawsItem = ({ paw, key }) => {
         className="pet-picture"
         src={paw.picture}
         alt={`a ${paw.animal} pic`}
+        onClick={() => {changeAnimalModal(key)}}
       ></img>
-      <p>{paw.animal}</p>
+      <p
+        onClick={() => {changeAnimalModal(key)}}
+      >{paw.animal}</p>
       <div className="descr-loc-container">
         <h5>Description:</h5>
         <p>{paw.description}</p>
