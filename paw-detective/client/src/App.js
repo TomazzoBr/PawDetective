@@ -1,6 +1,5 @@
 import "./styles/App.css";
 
-import ProtectedRoute from "./auth/Protected-route";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Route, Switch } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
@@ -13,11 +12,17 @@ import { storage } from "./services/firebaseConfig";
 import Dashboard from "./components/Dashboard/Dashboard";
 import PawsProfile from "./components/PawsProfile/PawsProfile";
 import PawsForm from "./components/PawsForm/PawsForm";
+import ProtectedRoute from "./components/auth/Protected-route";
 
 function App() {
 
+  // const {
+  //   user: { email },
+  //   getAccessTokenSilently,
+  // } = useAuth0();
+
   const {
-    user: { email },
+    user,
     getAccessTokenSilently,
   } = useAuth0();
 
@@ -101,7 +106,7 @@ function App() {
       lat,
       long,
       token,
-      email,
+      // email,
     });
   }
   const handleSubmit = (e) => {
@@ -196,7 +201,11 @@ function App() {
             <PawsProfile />
           </Route>
 
-          <ProtectedRoute exact path="/form" component={PawsForm} />
+          <Route exact path="/form" key={document.location.href}> {/* Pass key but props arent used in that component */}
+            <PawsProfile />
+          </Route>
+
+          {/* <ProtectedRoute exact path="/form" component={PawsForm} /> */}
         </Switch>
       </div>
     </GlobalContext.Provider>

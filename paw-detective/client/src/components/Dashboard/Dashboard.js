@@ -12,15 +12,14 @@ import PawsList from "./PawsList/PawList";
 
 const Dashboard = () => {
 
-  const customProps = useContext(globalContext);
+  const {customProps} = useContext(globalContext);
   const {filterPaws} = customProps;
 
   const history = useHistory();
   // const { user } = useAuth0();
 
-
-
   return (
+    
     <div className="dashboard">
 
       <Header />
@@ -53,6 +52,7 @@ const Dashboard = () => {
           </div>
 
           <PawsList />
+
         </div>
       </div>
     </div>
