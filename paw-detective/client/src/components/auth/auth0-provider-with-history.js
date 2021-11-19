@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 
 //getting domain and client id from environment variables (.env)
@@ -10,10 +10,10 @@ const Auth0ProviderWithHistory = ({ children }) => {
 
   //history: redirect the user to a specific url ,
   //access history obj and push on things
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onRedirectCallback = (appState) => {
-    history.push(appState?.returnTo || window.location.pathname);
+    navigate(appState?.returnTo || window.location.pathname);
   };
 
   return (

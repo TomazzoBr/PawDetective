@@ -1,7 +1,7 @@
 import "./styles/App.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
 import { useState, useEffect } from "react";
 
@@ -207,20 +207,15 @@ function App() {
   return (
     <GlobalContext.Provider value={{ customProps }}>
       <div className="App">
-        <Router>
-          <Routes>
-            <Route exact path="/">
-              <Dashboard />
-            </Route>
-            <Route exact path="/profile/:id" key={document.location.href}>
-              {" "}
-              {/* Pass key but props arent used in that component */}
-              <PawsProfile />
-            </Route>
+        <Routes>
+          <Route path="/" element={<Dashboard/>} />
 
-            <ProtectedRoute exact path="/form" component={PawsForm} />
-          </Routes>
-        </Router>
+          <Route exact path="/profile/:id" element={PawsProfile} key={document.location.href} />
+
+          <Route exact path="/form" element={<PawsForm/>} />
+
+          {/* <ProtectedRoute exact path="/form" component={PawsForm} /> */}
+        </Routes>
       </div>
     </GlobalContext.Provider>
   );
