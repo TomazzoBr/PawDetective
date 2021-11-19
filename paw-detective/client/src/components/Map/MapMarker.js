@@ -1,5 +1,5 @@
 import { Marker } from "@react-google-maps/api";
-import image from "../../paw-map.png";
+import image from "../../assets/images/paw-map.png"
 
 const MapMarker = ({ marker, setSelected }) => {
   return (

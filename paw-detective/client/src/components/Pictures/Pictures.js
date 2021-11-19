@@ -1,13 +1,12 @@
 import "./../../styles/Pictures.css";
 import { useContext } from "react";
-import { storage } from "./firebaseConfig";
 
 import globalContext from '../../services/globalContext'
 
-const PicturesUpload = ({ setPicture }) => {
+const PicturesUpload = () => {
 
   const {customProps} = useContext(globalContext)
-  const {image, url, progress, handleChange, handleUpload} = customProps;
+  const {url, progress, handleChange, handleUpload} = customProps;
 
   return (
     <div>

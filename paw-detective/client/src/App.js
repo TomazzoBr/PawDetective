@@ -1,17 +1,29 @@
 import "./styles/App.css";
 
 import ProtectedRoute from "./auth/Protected-route";
+import { useAuth0 } from "@auth0/auth0-react";
 import { Route, Switch } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import GlobalContext from './services/globalContext';
 import ApiService from './services/ApiService'
+import { storage } from "./services/firebaseConfig";
+
 import Dashboard from "./components/Dashboard/Dashboard";
 import PawsProfile from "./components/PawsProfile/PawsProfile";
 import PawsForm from "./components/PawsForm/PawsForm";
 
 function App() {
+
+  const {
+    user: { email },
+    getAccessTokenSilently,
+  } = useAuth0();
+
+  useEffect(() => {
+    getAllPaws()
+  },[]);
 
   ////////////////////////
   ///////STATES///////////
@@ -126,14 +138,27 @@ function App() {
   };
 
   const deletePawsHandler = async () => {
-    await apiService.deletePaws(paw._id);
+    await ApiService.deletePaws(paws[0]._id);
     setPaws((prev) =>
-      prev.filter((notDeletedPaw) => notDeletedPaw._id !== paw._id)
+      prev.filter((notDeletedPaw) => notDeletedPaw._id !== paws._id)
     );
     setFilteredPaws((prev) =>
-      prev.filter((notDeletedPaw) => notDeletedPaw._id !== paw._id)
+      prev.filter((notDeletedPaw) => notDeletedPaw._id !== paws._id)
     );
   };
+
+  const getAllPaws = () => {
+    ApiService.getPaws().then((paws) => {
+      const sortedPaws = paws.sort((a, b) => {
+        const pawA = new Date(a.date).getTime();
+        const pawB = new Date(b.date).getTime();
+        return pawB - pawA;
+      });
+      setPaws(sortedPaws);
+      setFilteredPaws(sortedPaws);
+    });
+  }
+
   ///////////////////////////
   /////////EXTRAS////////////
   ///////////////////////////
@@ -152,17 +177,17 @@ function App() {
   ///////////////////////////
   //This is gonna be a massive object and component (Whoever wants to implement redux or modularize functions, here's your time to shine)
   const customProps = {
-    image, url, progress, handleChange, handleUpload, //States + fn from Pictures Component
-    lostOrFound, picture, animal, description, location, lat, long, postPawHandler, handleSubmit, //States + fn from PawsForm Component
-    marker, selected, //States from Map Component
+    image, url, progress, handleChange, handleUpload, setPicture, //States + fn from Pictures Component
+    lostOrFound, animal, description, location,
+    handleSubmit, setLostorFound, setAnimal, setLocation, setDescription,//States + fn from PawsForm Component
+    marker, selected, setLat, setLong, setMarker, setSelected, //States from Map Component
     paws, filteredPaws, filterPaws, //States + fn from Dashboard Component
-    deletePawsHandler,  //Fn from PawsItem Component
-
+    deletePawsHandler, setPaws, setFilteredPaws  //Fn from PawsItem Component
   }
 
   return (
     <GlobalContext.Provider value = {{customProps}} >
-      <div className="App" style={{ backgroundImage: "url(../background.jpg)" }}> {/*Should redirect this bg img to assets */}
+      <div className="App">
         <Switch>
           <Route exact path="/">
             <Dashboard />

@@ -1,11 +1,11 @@
 import "./../../../../styles/PawsItem.css";
 import { Link } from "react-router-dom";
-import apiService from "../../services/ApiService";
+// import ApiService from "../../services/ApiService";
 import { useContext} from 'react'
 
 import globalContext from '../../../../services/globalContext'
 
-const PawsItem = ({ paw, setPaws, setFilteredPaws, user }) => {
+const PawsItem = ({ paw, key }) => {
 
   const customProps = useContext(globalContext);
   const {deletePawsHandler} = customProps;
@@ -39,7 +39,7 @@ const PawsItem = ({ paw, setPaws, setFilteredPaws, user }) => {
             className="delete_btn"
             onClick={() => {
               if (window.confirm("Are you sure you wish to delete this item?"))
-                deletePawsHandler();
+                deletePawsHandler(key);
             }}
           >
             <span

@@ -1,26 +1,28 @@
-import "./../../styles/Map.css";
+import "../../styles/Maps.css";
 
 import { GoogleMap, InfoWindow } from "@react-google-maps/api";
 
 import { formatRelative } from "date-fns";
 import { FaLocationArrow } from "react-icons/fa";
 
-import { useCallback, useState, useRef, useContext } from "react";
+import { useCallback, useRef, useContext } from "react";
 
 import MapMarker from "./MapMarker";
 import globalContext from '../../services/globalContext'
 
-const Map = ({ setLat, setLong, profileMarker, pawsArray }) => {
+const Map = ({profileMarker}) => {
 
   const {customProps} = useContext(globalContext);
-  const {marker, selected} = customProps;
+  const {paws, marker, selected,
+    setLat, setLong, setMarker, setSelected
+  } = customProps;
 
   const mapRef = useRef();
 
   const markersArray =
-    pawsArray &&
-    pawsArray.length &&
-    pawsArray.map((paw) => (
+    paws &&
+    paws.length &&
+    paws.map((paw) => (
       <MapMarker
         key={paw._id}
         setSelected={setSelected}
@@ -32,39 +34,52 @@ const Map = ({ setLat, setLong, profileMarker, pawsArray }) => {
       />
     ));
 
-  const onMapClick = useCallback( //Why use callback instead of just making a cb call?
-    (e) => {
-      setMarker(() => ({
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        time: new Date(),
-      }));
-      if (setLat && setLong) {
-        setLat(e.latLng.lat());
-        setLong(e.latLng.lng());
-      }
-    },
-    [setLat, setLong]
-  );
+  const onMapClick = (e) => {
+    setMarker(() => ({
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng(),
+      time: new Date(),
+    }));
+    if (setLat && setLong) {
+      setLat(e.latLng.lat());
+      setLong(e.latLng.lng());
+    }
+  }
+  const onMapLoad = (map) => {
+    mapRef.current = map;
+  }
+
+  // const onMapClick = useCallback( //Why use callback instead of just making a cb call?
+  //   (e) => {
+  //     setMarker(() => ({
+  //       lat: e.latLng.lat(),
+  //       lng: e.latLng.lng(),
+  //       time: new Date(),
+  //     }));
+  //     if (setLat && setLong) {
+  //       setLat(e.latLng.lat());
+  //       setLong(e.latLng.lng());
+  //     }
+  //   },
+  //   [setLat, setLong]
+  // );
+
+  // const onMapLoad = useCallback((map) => {
+  //   mapRef.current = map;
+  // }, []);
+  const panTo = useCallback(({ lat, lng }) => {
+      mapRef.current.panTo({ lat, lng });
+      mapRef.current.setZoom(14);
+  }, []);
 
   const mapContainerStyle = {
     width: "25em",
     height: "25em",
   };
-
   const center = {
     lat: 53.349804,
     lng: -6.26031,
   };
-
-  const onMapLoad = useCallback((map) => {
-    mapRef.current = map;
-  }, []);
-
-  const panTo = useCallback(({ lat, lng }) => {
-    mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(14);
-  }, []);
 
   const Locate = ({ panTo }) => {
     return (
@@ -99,32 +114,36 @@ const Map = ({ setLat, setLong, profileMarker, pawsArray }) => {
             ? { lat: profileMarker.lat, lng: profileMarker.lng }
             : center
         }
-        onClick={onMapClick}
-        onLoad={onMapLoad}
+        onClick={(e) => onMapClick(e)}
+        onLoad={(map) => onMapLoad(map)}
       >
         {markersArray}
-        {!pawsArray && !profileMarker && marker ? (
-          <MapMarker marker={marker} setSelected={setSelected} />
-        ) : null}
 
-        {profileMarker ? (
-          <MapMarker marker={profileMarker} setSelected={setSelected} />
-        ) : null}
-        {selected ? (
-          <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
-            onCloseClick={() => {
-              setSelected(null);
-            }}
-          >
+        {!paws && !profileMarker && marker
+          ? (<MapMarker marker={marker} setSelected={setSelected} />)
+          : null}
+
+        {profileMarker
+          ? (<MapMarker marker={profileMarker} setSelected={setSelected} />)
+          : null}
+
+
+        {selected
+          ? (<InfoWindow
+              position={{ lat: selected.lat, lng: selected.lng }}
+              onCloseClick={() => {
+                setSelected(null);
+              }}
+            >
             <div>
               <h2>Lost Paws!</h2>
-              <p style={{ color: "blue" }}>
+              <p>
                 Time: {formatRelative(selected.time, new Date())}
               </p>
             </div>
-          </InfoWindow>
-        ) : null}
+          </InfoWindow>)
+          : null}
+
       </GoogleMap>
     </div>
   );

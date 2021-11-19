@@ -54,10 +54,10 @@ async function deletePaws(id) {
   });
 }
 
-const apiService = {
+const ApiService = {
   getPaws,
   postPaws,
   deletePaws,
 };
 
-export default apiService;
+export default ApiService;

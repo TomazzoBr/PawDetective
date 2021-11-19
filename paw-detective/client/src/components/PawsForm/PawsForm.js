@@ -1,9 +1,8 @@
 import "./../../styles/PawsForm.css";
-import { useState, useContext } from "react";
-import ApiService from "../../services/ApiService";
+import { useContext } from "react";
 // dont need anymore useState or ApiService as you have everything in App component
 import { FaHome } from "react-icons/fa";
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
 import Map from "../Map/Map";
 import PicturesUpload from "../Pictures/Pictures";
@@ -14,15 +13,15 @@ const PawsForm = () => {
 
   const {customProps} = useContext(globalContext);
   const {
-    lostOrFound, picture, animal, description, location, lat, long, //Those are states, and the set states should be handled by a single function in App.js
-    postPawHandler, handleSubmit //postPawHandler is a function that is being called by handleSubmit
+    lostOrFound, animal, description, location, //Those are states, and the set states should be handled by a single function in App.js
+    handleSubmit, setLostorFound, setAnimal, setLocation, setDescription //postPawHandler is a function that is being called by handleSubmit
   } = customProps;
 
-  const {
-    user: { email },
-    getAccessTokenSilently,
-  } = useAuth0();
-  
+  // const {
+  //   user: { email },
+  //   getAccessTokenSilently,
+  // } = useAuth0();
+
   const history = useHistory();
 
   return (
@@ -52,7 +51,9 @@ const PawsForm = () => {
           {/* add a picture */}
           <div className="form-control">
             <label>Picture</label>
-            <PicturesUpload setPicture={setPicture} />
+
+            <PicturesUpload />
+
           </div>
           {/* choose what kind of animal it is */}
           <div className="form-control">
@@ -86,7 +87,9 @@ const PawsForm = () => {
             />
           </div>
           <div>
-            <Map setLat={setLat} setLong={setLong} />
+
+            <Map />
+
           </div>
           <button className="upload-button" type="submit">
             Submit
