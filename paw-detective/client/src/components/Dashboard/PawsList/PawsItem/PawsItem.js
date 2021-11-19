@@ -12,27 +12,19 @@ const PawsItem = ({ paw, key }) => {
 
   return (
     <li key={paw.picture}>
-      <Link
-        to={{
-          pathname: `/profile/${paw._id}`,
-          state: paw,
-        }}
-        className="paws-item"
-      >
-        <p className="lost-found-title">{paw.lostOrFound}</p>
-        <img
-          className="pet-picture"
-          src={paw.picture}
-          alt={`a ${paw.animal} pic`}
-        ></img>
-        <p>{paw.animal}</p>
-        <div className="descr-loc-container">
-          <h5>Description:</h5>
-          <p>{paw.description}</p>
-          <h5>Location:</h5>
-          <p>{paw.location}</p>
-        </div>
-      </Link>
+      <p className="lost-found-title">{paw.lostOrFound}</p>
+      <img
+        className="pet-picture"
+        src={paw.picture}
+        alt={`a ${paw.animal} pic`}
+      ></img>
+      <p>{paw.animal}</p>
+      <div className="descr-loc-container">
+        <h5>Description:</h5>
+        <p>{paw.description}</p>
+        <h5>Location:</h5>
+        <p>{paw.location}</p>
+      </div>
       <div className="topic_delete">
         {
           <button

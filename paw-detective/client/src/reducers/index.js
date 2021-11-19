@@ -1,5 +1,6 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
+import lost from './lostOrFound'
 
 export default combineReducers({
-  // enter reducers
+  lost
 })

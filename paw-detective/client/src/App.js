@@ -47,6 +47,9 @@ function App() {
 
   const [paws, setPaws] = useState([]);
   const [filteredPaws, setFilteredPaws] = useState([]);
+
+  console.log(paws)
+  console.log(filteredPaws)
   ///////////////////////////
   ///////FUNCTIONS///////////
   ///////////////////////////
