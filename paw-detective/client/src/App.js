@@ -1,6 +1,5 @@
 import "./styles/App.css";
 
-import ProtectedRoute from "./auth/Protected-route";
 import { useAuth0 } from "@auth0/auth0-react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
@@ -13,12 +12,15 @@ import { storage } from "./services/firebaseConfig";
 import Dashboard from "./components/Dashboard/Dashboard";
 import PawsProfile from "./components/PawsProfile/PawsProfile";
 import PawsForm from "./components/PawsForm/PawsForm";
+import ProtectedRoute from "./components/auth/Protected-route";
 
 function App() {
-  const {
-    user: { email },
-    getAccessTokenSilently,
-  } = useAuth0();
+  // const {
+  //   user: { email },
+  //   getAccessTokenSilently,
+  // } = useAuth0();
+
+  const { user, getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     getAllPaws();
@@ -100,7 +102,7 @@ function App() {
       lat,
       long,
       token,
-      email,
+      // email,
     });
   }
   const handleSubmit = (e) => {

@@ -11,7 +11,7 @@ import Map from "../Map/Map";
 import PawsList from "./PawsList/PawList";
 
 const Dashboard = () => {
-  const customProps = useContext(globalContext);
+  const { customProps } = useContext(globalContext);
   const { filterPaws } = customProps;
 
   const navigate = useNavigate();
