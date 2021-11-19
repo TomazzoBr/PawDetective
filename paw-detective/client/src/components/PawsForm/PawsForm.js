@@ -3,18 +3,24 @@ import { useContext } from "react";
 // dont need anymore useState or ApiService as you have everything in App component
 import { FaHome } from "react-icons/fa";
 // import { useAuth0 } from "@auth0/auth0-react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Map from "../Map/Map";
 import PicturesUpload from "../Pictures/Pictures";
 
-import globalContext from "../../services/globalContext"
+import globalContext from "../../services/globalContext";
 
 const PawsForm = () => {
-
-  const {customProps} = useContext(globalContext);
+  const { customProps } = useContext(globalContext);
   const {
-    lostOrFound, animal, description, location, //Those are states, and the set states should be handled by a single function in App.js
-    handleSubmit, setLostorFound, setAnimal, setLocation, setDescription //postPawHandler is a function that is being called by handleSubmit
+    lostOrFound,
+    animal,
+    description,
+    location, //Those are states, and the set states should be handled by a single function in App.js
+    handleSubmit,
+    setLostorFound,
+    setAnimal,
+    setLocation,
+    setDescription, //postPawHandler is a function that is being called by handleSubmit
   } = customProps;
 
   // const {
@@ -22,18 +28,18 @@ const PawsForm = () => {
   //   getAccessTokenSilently,
   // } = useAuth0();
 
-  const history = useHistory();
-
   return (
     <div>
       <header className="form-header">
         <h1 className="title-header"> LOST or FOUND PAWS </h1>
         <div className="login-logo">
-          <FaHome size={30} onClick={() => history.push("/")} />
+          <Link to="/">
+            <FaHome size={30} />
+          </Link>
         </div>
       </header>
       <div className="form-container">
-        <form className="add-form" onSubmit={(e)=>handleSubmit(e)}>
+        <form className="add-form" onSubmit={(e) => handleSubmit(e)}>
           {/* choose if you lost a pet or found a lost one */}
           <div className="form-control">
             <div>
@@ -53,7 +59,6 @@ const PawsForm = () => {
             <label>Picture</label>
 
             <PicturesUpload />
-
           </div>
           {/* choose what kind of animal it is */}
           <div className="form-control">
@@ -87,9 +92,7 @@ const PawsForm = () => {
             />
           </div>
           <div>
-
             <Map />
-
           </div>
           <button className="upload-button" type="submit">
             Submit

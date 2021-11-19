@@ -2,12 +2,12 @@ import "./styles/App.css";
 
 import ProtectedRoute from "./auth/Protected-route";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
 import { useState, useEffect } from "react";
 
-import GlobalContext from './services/globalContext';
-import ApiService from './services/ApiService'
+import GlobalContext from "./services/globalContext";
+import ApiService from "./services/ApiService";
 import { storage } from "./services/firebaseConfig";
 
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -15,15 +15,14 @@ import PawsProfile from "./components/PawsProfile/PawsProfile";
 import PawsForm from "./components/PawsForm/PawsForm";
 
 function App() {
-
   const {
     user: { email },
     getAccessTokenSilently,
   } = useAuth0();
 
   useEffect(() => {
-    getAllPaws()
-  },[]);
+    getAllPaws();
+  }, []);
 
   ////////////////////////
   ///////STATES///////////
@@ -157,7 +156,7 @@ function App() {
       setPaws(sortedPaws);
       setFilteredPaws(sortedPaws);
     });
-  }
+  };
 
   ///////////////////////////
   /////////EXTRAS////////////
@@ -169,35 +168,57 @@ function App() {
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
 
-
-
-
   ////////////////////////////
   /////////CONTEXT////////////
   ///////////////////////////
   //This is gonna be a massive object and component (Whoever wants to implement redux or modularize functions, here's your time to shine)
   const customProps = {
-    image, url, progress, handleChange, handleUpload, setPicture, //States + fn from Pictures Component
-    lostOrFound, animal, description, location,
-    handleSubmit, setLostorFound, setAnimal, setLocation, setDescription,//States + fn from PawsForm Component
-    marker, selected, setLat, setLong, setMarker, setSelected, //States from Map Component
-    paws, filteredPaws, filterPaws, //States + fn from Dashboard Component
-    deletePawsHandler, setPaws, setFilteredPaws  //Fn from PawsItem Component
-  }
+    image,
+    url,
+    progress,
+    handleChange,
+    handleUpload,
+    setPicture, //States + fn from Pictures Component
+    lostOrFound,
+    animal,
+    description,
+    location,
+    handleSubmit,
+    setLostorFound,
+    setAnimal,
+    setLocation,
+    setDescription, //States + fn from PawsForm Component
+    marker,
+    selected,
+    setLat,
+    setLong,
+    setMarker,
+    setSelected, //States from Map Component
+    paws,
+    filteredPaws,
+    filterPaws, //States + fn from Dashboard Component
+    deletePawsHandler,
+    setPaws,
+    setFilteredPaws, //Fn from PawsItem Component
+  };
 
   return (
-    <GlobalContext.Provider value = {{customProps}} >
+    <GlobalContext.Provider value={{ customProps }}>
       <div className="App">
-        <Switch>
-          <Route exact path="/">
-            <Dashboard />
-          </Route>
-          <Route exact path="/profile/:id" key={document.location.href}> {/* Pass key but props arent used in that component */}
-            <PawsProfile />
-          </Route>
+        <Router>
+          <Routes>
+            <Route exact path="/">
+              <Dashboard />
+            </Route>
+            <Route exact path="/profile/:id" key={document.location.href}>
+              {" "}
+              {/* Pass key but props arent used in that component */}
+              <PawsProfile />
+            </Route>
 
-          <ProtectedRoute exact path="/form" component={PawsForm} />
-        </Switch>
+            <ProtectedRoute exact path="/form" component={PawsForm} />
+          </Routes>
+        </Router>
       </div>
     </GlobalContext.Provider>
   );
