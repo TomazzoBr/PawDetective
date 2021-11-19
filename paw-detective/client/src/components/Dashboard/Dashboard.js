@@ -1,7 +1,7 @@
 import "./../../styles/Dashboard.css";
 
 // import { useAuth0 } from "@auth0/auth0-react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { useContext } from "react";
 
 import globalContext from "../../services/globalContext";
@@ -11,22 +11,20 @@ import Map from "../Map/Map";
 import PawsList from "./PawsList/PawList";
 
 const Dashboard = () => {
+  const { customProps } = useContext(globalContext);
+  const { filterPaws } = customProps;
 
-  const {customProps} = useContext(globalContext);
-  const {filterPaws} = customProps;
-
-  const history = useHistory();
+  const navigate = useNavigate();
   // const { user } = useAuth0();
 
   return (
-    
     <div className="dashboard">
-
       <Header />
 
       <button
         className="upload-pet-button"
-        onClick={() => history.push("/form")}
+        onClick={() => navigate("/form", { replace: true })} // replace is an option. let's check what it does,
+        // if nothing special changes, we should use Link
       >
         Upload Pet
       </button>
@@ -52,7 +50,6 @@ const Dashboard = () => {
           </div>
 
           <PawsList />
-
         </div>
       </div>
     </div>
