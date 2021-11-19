@@ -6,7 +6,6 @@ import { useLoadScript } from "@react-google-maps/api";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
 import ApiService from "./services/ApiService";
