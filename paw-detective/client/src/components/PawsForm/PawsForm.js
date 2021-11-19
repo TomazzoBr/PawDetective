@@ -1,70 +1,29 @@
-import "./PawsForm.css";
-import { useState } from "react";
-import ApiService from "../../ApiService";
+import "./../../styles/PawsForm.css";
+import { useState, useContext } from "react";
+import ApiService from "../../services/ApiService";
+// dont need anymore useState or ApiService as you have everything in App component
 import { FaHome } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
 import Map from "../Map/Map";
 import PicturesUpload from "../Pictures/Pictures";
 
+import globalContext from "../../services/globalContext"
+
 const PawsForm = () => {
-  const [lostOrFound, setLostorFound] = useState("Lost");
-  const [picture, setPicture] = useState("");
-  const [animal, setAnimal] = useState("Dog");
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [lat, setLat] = useState("");
-  const [long, setLong] = useState("");
+
+  const {customProps} = useContext(globalContext);
+  const {
+    lostOrFound, picture, animal, description, location, lat, long, //Those are states, and the set states should be handled by a single function in App.js
+    postPawHandler, handleSubmit //postPawHandler is a function that is being called by handleSubmit
+  } = customProps;
 
   const {
     user: { email },
     getAccessTokenSilently,
   } = useAuth0();
+  
   const history = useHistory();
-
-  async function postPawHandler(
-    lostOrFound,
-    picture,
-    animal,
-    description,
-    location,
-    lat,
-    long
-  ) {
-    const token = await getAccessTokenSilently();
-    ApiService.postPaws({
-      lostOrFound,
-      picture,
-      animal,
-      description,
-      location,
-      lat,
-      long,
-      token,
-      email,
-    });
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!description && !picture && !location) {
-      alert("please fill in all the fields");
-      return;
-    }
-    postPawHandler(
-      lostOrFound,
-      picture,
-      animal,
-      description,
-      location,
-      +lat,
-      +long
-    );
-    setPicture("");
-    setDescription("");
-    setLocation("");
-  };
 
   return (
     <div>
@@ -75,7 +34,7 @@ const PawsForm = () => {
         </div>
       </header>
       <div className="form-container">
-        <form className="add-form" onSubmit={handleSubmit}>
+        <form className="add-form" onSubmit={(e)=>handleSubmit(e)}>
           {/* choose if you lost a pet or found a lost one */}
           <div className="form-control">
             <div>

@@ -1,12 +1,142 @@
-import "./App.css";
-import { Route, Switch } from "react-router-dom";
-import Dashboard from "./components/Dashboard/Dashboard";
-import PawsForm from "./components/PawsForm/PawsForm";
-import PawsProfile from "./components/PawsProfile/PawsProfile";
+import "./styles/App.css";
+
 import ProtectedRoute from "./auth/Protected-route";
+import { Route, Switch } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
+import { useState } from "react";
+
+import GlobalContext from './services/globalContext';
+import ApiService from './services/ApiService'
+import Dashboard from "./components/Dashboard/Dashboard";
+import PawsProfile from "./components/PawsProfile/PawsProfile";
+import PawsForm from "./components/PawsForm/PawsForm";
 
 function App() {
+
+  ////////////////////////
+  ///////STATES///////////
+  ////////////////////////
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
+  const [progress, setProgress] = useState(0);
+
+  const [lostOrFound, setLostorFound] = useState("Lost");
+  const [picture, setPicture] = useState("");
+  const [animal, setAnimal] = useState("Dog");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [lat, setLat] = useState("");
+  const [long, setLong] = useState("");
+
+  const [marker, setMarker] = useState(null);
+  const [selected, setSelected] = useState(null);
+
+  const [paws, setPaws] = useState([]);
+  const [filteredPaws, setFilteredPaws] = useState([]);
+  ///////////////////////////
+  ///////FUNCTIONS///////////
+  ///////////////////////////
+  const handleChange = (event) => {
+    if (event.target.files[0]) {
+      setImage(event.target.files[0]);
+    }
+  };
+  const handleUpload = () => {
+    if (image) {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+      uploadTask.on(
+        "state_changed",
+        //current progress of the file upload
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+              setUrl(url);
+              setPicture(url);
+            });
+        }
+      );
+    }
+  };
+
+  async function postPawHandler(
+    lostOrFound,
+    picture,
+    animal,
+    description,
+    location,
+    lat,
+    long
+  ) {
+    const token = await getAccessTokenSilently();
+    ApiService.postPaws({
+      lostOrFound,
+      picture,
+      animal,
+      description,
+      location,
+      lat,
+      long,
+      token,
+      email,
+    });
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!description && !picture && !location) {
+      alert("please fill in all the fields");
+      return;
+    }
+    postPawHandler(
+      lostOrFound,
+      picture,
+      animal,
+      description,
+      location,
+      +lat,
+      +long
+    );
+    setPicture("");
+    setDescription("");
+    setLocation("");
+  };
+
+  const filterPaws = (lostOrFound) => {
+    if (lostOrFound === "Lost") {
+      const lostList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
+      return setFilteredPaws(lostList);
+    }
+    if (lostOrFound === "Found") {
+      const foundList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
+      return setFilteredPaws(foundList);
+    }
+    return setFilteredPaws(paws);
+  };
+
+  const deletePawsHandler = async () => {
+    await apiService.deletePaws(paw._id);
+    setPaws((prev) =>
+      prev.filter((notDeletedPaw) => notDeletedPaw._id !== paw._id)
+    );
+    setFilteredPaws((prev) =>
+      prev.filter((notDeletedPaw) => notDeletedPaw._id !== paw._id)
+    );
+  };
+  ///////////////////////////
+  /////////EXTRAS////////////
+  ///////////////////////////
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_PLACES_API_KEY,
   });
@@ -14,19 +144,37 @@ function App() {
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
 
-  return (
-    <div className="App" style={{ backgroundImage: "url(../background.jpg)" }}>
-      <Switch>
-        <Route exact path="/">
-          <Dashboard />
-        </Route>
-        <Route exact path="/profile/:id" key={document.location.href}>
-          <PawsProfile />
-        </Route>
 
-        <ProtectedRoute exact path="/form" component={PawsForm} />
-      </Switch>
-    </div>
+
+
+  ////////////////////////////
+  /////////CONTEXT////////////
+  ///////////////////////////
+  //This is gonna be a massive object and component (Whoever wants to implement redux or modularize functions, here's your time to shine)
+  const customProps = {
+    image, url, progress, handleChange, handleUpload, //States + fn from Pictures Component
+    lostOrFound, picture, animal, description, location, lat, long, postPawHandler, handleSubmit, //States + fn from PawsForm Component
+    marker, selected, //States from Map Component
+    paws, filteredPaws, filterPaws, //States + fn from Dashboard Component
+    deletePawsHandler,  //Fn from PawsItem Component
+
+  }
+
+  return (
+    <GlobalContext.Provider value = {{customProps}} >
+      <div className="App" style={{ backgroundImage: "url(../background.jpg)" }}> {/*Should redirect this bg img to assets */}
+        <Switch>
+          <Route exact path="/">
+            <Dashboard />
+          </Route>
+          <Route exact path="/profile/:id" key={document.location.href}> {/* Pass key but props arent used in that component */}
+            <PawsProfile />
+          </Route>
+
+          <ProtectedRoute exact path="/form" component={PawsForm} />
+        </Switch>
+      </div>
+    </GlobalContext.Provider>
   );
 }
 

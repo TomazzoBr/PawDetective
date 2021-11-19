@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { withAuthenticationRequired } from "@auth0/auth0-react";
-import Loading from "../Account-setup/Loading";
+import Loading from "../components/Account-setup/Loading";
 
 const ProtectedRoute = ({ component, ...args }) => (
   <Route

@@ -1,7 +1,8 @@
-import PawsItem from "../PawsItem/PawsItem";
-import "./PawsList.css";
+import "./../../../styles/PawsList.css";
+import PawsItem from "./PawsItem/PawsItem";
 
 const PawsList = ({ paws, setPaws, setFilteredPaws, user }) => {
+
   const pawsList =
     paws.length &&
     paws.map((paw) => (
@@ -14,6 +15,7 @@ const PawsList = ({ paws, setPaws, setFilteredPaws, user }) => {
         setFilteredPaws={setFilteredPaws}
       />
     ));
+    
   return (
     <ul className="list-container">
       <h4 className="click-add-h4">Click a pet to see more details</h4>
