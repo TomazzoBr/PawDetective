@@ -6,8 +6,6 @@ import { useLoadScript } from "@react-google-maps/api";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useDispatch } from 'react-redux';
-
 import ApiService from "./services/ApiService";
 import GlobalContext from "./services/globalContext";
 import { storage } from "./services/firebaseConfig";
@@ -41,14 +39,6 @@ function App() {
   const [url, setUrl] = useState("");
   const [progress, setProgress] = useState(0);
 
-  // Should have all those properties in one object
-  // const [lostOrFound, setLostorFound] = useState("Lost");
-  // const [picture, setPicture] = useState("");
-  // const [animal, setAnimal] = useState("Dog");
-  // const [description, setDescription] = useState("");
-  // const [location, setLocation] = useState("");
-  // const [lat, setLat] = useState("");
-  // const [long, setLong] = useState("");
   const [animalForm, setAnimal] = useState({
     lostOrFound: false,
     picture: "",
@@ -73,7 +63,6 @@ function App() {
   const handleChange = (e) => {
     if (e.target.files[0]) {
       formHandler (e)
-      // setImage(event.target.files[0]); //Have to change this one for setAnimal
     }
   };
   const handleUpload = () => { //This one needs firebase config to upload pictures
@@ -200,7 +189,7 @@ function App() {
       value = e.target.files[0]
     }
     const animal = {...animalForm}
-    
+
     animal[name] = value
     setAnimal(animal)
   }
