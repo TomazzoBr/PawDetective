@@ -58,7 +58,7 @@ function App() {
       setImage(event.target.files[0]);
     }
   };
-  const handleUpload = () => {
+  const handleUpload = () => { //This one needs firebase config to upload pictures
     if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
       uploadTask.on(
@@ -202,7 +202,7 @@ function App() {
           </Route>
 
           <Route exact path="/form" key={document.location.href}> {/* Pass key but props arent used in that component */}
-            <PawsProfile />
+            <PawsForm />
           </Route>
 
           {/* <ProtectedRoute exact path="/form" component={PawsForm} /> */}

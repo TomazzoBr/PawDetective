@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { FaHome } from "react-icons/fa";
 // import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
+
 import Map from "../Map/Map";
 import PicturesUpload from "../Pictures/Pictures";
 

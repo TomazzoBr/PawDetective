@@ -13,7 +13,7 @@ const PicturesUpload = () => {
       <div>
         <progress value={progress} max="100" />
       </div>
-      <input type="file" onChange={()=>handleChange()} />
+      <input type="file" onChange={(e)=>handleChange(e)} />
 
       <div>
         <img
