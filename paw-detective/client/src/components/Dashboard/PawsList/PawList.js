@@ -11,16 +11,20 @@ const PawsList = () => {
   const {paws, filterBtn} = customProps
 
   const renderPaws = (paws) => {
-    console.log(paws)
-      return paws.filter(paw => {
-          if (filterBtn === "Lost") {
-            return paw.lostOrFound === true;
-          } else if (filterBtn === "Found") {
-            return paw.lostOrFound === false;
-          }
-          return paws
-        })
-        .map((paw) => (<PawsItem paw={paw} key={paw.id}/>));
+        if (paws.length < 1) {
+          return <p>there no pets in this list😉</p>
+        }
+        else {
+          return paws.filter(paw => {
+            if (filterBtn === "Lost") {
+              return paw.lostOrFound === true;
+            } else if (filterBtn === "Found") {
+              return paw.lostOrFound === false;
+            }
+            return paws
+          })
+          .map((paw) => (<PawsItem paw={paw} key={paw.id}/>));
+        }
   }
 
   return (
