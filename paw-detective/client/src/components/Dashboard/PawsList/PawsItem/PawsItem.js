@@ -1,5 +1,5 @@
 import "./../../../../styles/PawsItem.css";
-import { Link } from "react-router-dom";
+
 // import ApiService from "../../services/ApiService";
 import { useContext} from 'react'
 
@@ -7,16 +7,18 @@ import globalContext from '../../../../services/globalContext'
 
 const PawsItem = ({ paw, key }) => {
 
-  const customProps = useContext(globalContext);
-  const {deletePawsHandler} = customProps;
+  const {customProps} = useContext(globalContext);
+  const {deletePawsHandler, changeAnimalModal} = customProps;
 
   return (
     <li key={paw.picture}>
       <p className="lost-found-title">{paw.lostOrFound}</p>
       <img
+        name={paw._id}
         className="pet-picture"
         src={paw.picture}
         alt={`a ${paw.animal} pic`}
+        onClick={(e)=>{changeAnimalModal(e.target.name)}}
       ></img>
       <p>{paw.animal}</p>
       <div className="descr-loc-container">

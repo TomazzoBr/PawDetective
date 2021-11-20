@@ -17,10 +17,6 @@ import PawsForm from "./components/PawsForm/PawsForm";
 // import ProtectedRoute from "./components/auth/Protected-route";
 
 function App() {
-
-
-
-
   // const {
   //   user: { email },
   //   getAccessTokenSilently,
@@ -54,6 +50,11 @@ function App() {
 
   const [paws, setPaws] = useState([]);
   const [filteredPaws, setFilteredPaws] = useState([]);
+  const [filterBtn, setFilterBtn] = useState('All');
+
+  // I set is as string just cause key (id) will be an string too
+  // But we should work with another key instead of ._id
+  const [selectedAnimal, setSelectedAnimal] = useState("0");
 
   ///////////////////////////
   ///////FUNCTIONS///////////
@@ -133,18 +134,6 @@ function App() {
     });
   };
 
-  const filterPaws = (lostOrFound) => {
-    if (lostOrFound === "Lost") {
-      const lostList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
-      return setFilteredPaws(lostList);
-    }
-    if (lostOrFound === "Found") {
-      const foundList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
-      return setFilteredPaws(foundList);
-    }
-    return setFilteredPaws(paws);
-  };
-
   const deletePawsHandler = async () => {
     await ApiService.deletePaws(paws[0]._id);
     setPaws((prev) =>
@@ -172,10 +161,10 @@ function App() {
   ///////////////////////////
   const formHandler = (e) => {
     //We just need to work on the lat,long that come from Map.js
-    console.log(e)
+    // console.log(e)
     const name = e.target.name;
     let value = e.target.value;
-    console.log(name, value)
+    // console.log(name, value)
     if (name === 'lostOrFound') {
       if (value === 'Lost') {
         value = true
@@ -191,7 +180,13 @@ function App() {
     animal[name] = value
     setAnimal(animal)
   }
-
+  const changeAnimalModal = (id) => {
+    window.scrollTo(0, 0);
+    setSelectedAnimal(id)
+  }
+  const changeFilter = (flag) => {
+    setFilterBtn(flag)
+  }
 
   ///////////////////////////
   /////////EXTRAS////////////
@@ -224,12 +219,17 @@ function App() {
     setSelected, //States from Map Component
 
     paws,
-    filteredPaws,
-    filterPaws, //States + fn from Dashboard Component
+    filteredPaws, //States + fn from Dashboard Component
 
     deletePawsHandler,
     setPaws,
     setFilteredPaws, //Fn from PawsItem Component
+
+    selectedAnimal,
+    changeAnimalModal, //States + fn from PawsProfile Component
+
+    filterBtn,
+    changeFilter, //Fn from PawsItem Component
   };
 
   return (
@@ -238,7 +238,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard/>} />
 
-          <Route exact path="/profile/:id" element={<PawsProfile/>} key={document.location.href} />
+          {/* <Route exact path="/profile/:id" element={<PawsProfile/>} key={document.location.href} /> */}
 
           <Route exact path="/form" element={<PawsForm/>} />
 

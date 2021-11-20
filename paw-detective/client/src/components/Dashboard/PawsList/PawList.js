@@ -8,21 +8,30 @@ import globalContext from "../../../services/globalContext"
 const PawsList = () => {
 
   const {customProps} = useContext(globalContext);
-  const {paws} = customProps
+  const {paws, filterBtn} = customProps
 
-  const pawsList =
-    paws.length &&
-    paws.map((paw) => (
-      <PawsItem
-        paw={paw}
-        key={paw.id}
-      />
-    ));
+  const renderPaws = (paws) => {
+        if (paws.length < 1) {
+          return <p>there no pets in this list😉</p>
+        }
+        else {
+          return paws.filter(paw => {
+            if (filterBtn === "Lost") {
+              return paw.lostOrFound === true;
+            } else if (filterBtn === "Found") {
+              return paw.lostOrFound === false;
+            }
+            return paws
+          })
+          .map((paw) => (<PawsItem paw={paw} key={paw.id}/>));
+        }
+  }
 
   return (
     <ul className="list-container">
       <h4 className="click-add-h4">Click a pet to see more details</h4>
-      {pawsList.length ? pawsList : <p>there no pets in this list😉</p>}
+      {renderPaws(paws)}
+      {/* {pawsList.length ? pawsList : <p>there no pets in this list😉</p>} */}
     </ul>
   );
 };

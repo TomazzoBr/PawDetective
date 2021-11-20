@@ -25,7 +25,7 @@ const Auth0ProviderWithHistory = ({ children }) => {
       //root of where this app is hosted
       redirectUri={window.location.origin}
       onRedirectCallback={onRedirectCallback}
-      // audience={audience}
+      audience={audience}
     >
       {children}
     </Auth0Provider>

@@ -5,8 +5,8 @@ import checkJwt from "./authz/check-jwt";
 const router = express.Router();
 
 router.get("/paws", paws.getPaws);
-router.put("/paws", checkJwt, paws.putPaws)
-router.post("/paws", checkJwt, paws.postPaws);
-router.delete("/paws/:id",checkJwt, paws.deletePaws);
+router.put("/paws", paws.putPaws)
+router.post("/paws", paws.postPaws);
+router.delete("/paws/:id",paws.deletePaws);
 
 export default router;

@@ -1,23 +1,52 @@
 import "./../../styles/PawsProfile.css";
+
+import { useContext, useEffect } from 'react'
 import { FaHome } from "react-icons/fa";
-import { useLocation, Link } from "react-router-dom";
+
+import globalContext from '../../services/globalContext'
+
 import Map from "../Map/Map";
 
 const PawsProfile = () => {
-  const location = useLocation();
 
-  console.log(location)
+  const {customProps} = useContext(globalContext)
+  const {selectedAnimal, changeAnimalModal, paws} = customProps;
+
+  useEffect(() => {},[selectedAnimal])
+
+  /*Object from db:
+    animal: "Cat"
+    date: "2021-11-16T21:18:16.014Z"
+    description: "Grizzly is a grey/white cat. She wears a red collars with our address on it."
+    email: "natasa410@hotmail.com"
+    lat: 54.16314828187047
+    location: "Isle of Man"
+    long: -4.585993996081346
+    picture: "https://firebasestorage.googleapis.com/v0/b/paw-detective-app.appspot.com/o/images%2Fcatpic.jpg?alt=media&token=463c3a41-0bc2-4e40-99c7-74ef3d3321ec"
+    __v: 0
+    _id: "619420184bf9e3b1b5effde3"
+  */
+  const animalByID = paws.filter(paw => paw._id === selectedAnimal)[0];
 
   const {
-    lostOrFound,
+    // lostOrFound,
     picture,
     animal,
     description,
-    address = location.state.location,
+    // address,
     lat,
     long,
     date,
-  } = location.state;
+  } = animalByID
+
+  const lostOrFound="Lost";
+  const address="Home";
+
+  // I should get the element from paws that have the same id as
+  // selectedAnimal, and then retrieve data from there
+
+  //Also modify the class of the modal to make it smaller and
+  //position absolute to put it in the middle of the screen
 
   const profileMarker = {
     lat,
@@ -26,15 +55,16 @@ const PawsProfile = () => {
   };
 
   return (
-    <div>
-      <header className="form-header">
+    <div className="modelAnimal"
+    onClick={()=>{changeAnimalModal("0")}}
+    >
+      {/* <header className="form-header">
         <h1 className="title-header"> PAW PROFILE </h1>
-        <div className="login-logo">
-          <Link to="/">
+        <div
+          className="login-logo">
             <FaHome size={30} />
-          </Link>
         </div>
-      </header>
+      </header> */}
       <div className="container-wrap">
         <div className="profile-container">
           <p className="lost-found-title">{lostOrFound}</p>

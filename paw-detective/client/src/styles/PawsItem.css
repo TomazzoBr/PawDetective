@@ -11,6 +11,9 @@ li {
   margin-bottom: 5px;
   border-radius: 5px;
 }
+li > img:hover {
+  cursor: pointer;
+}
 
 .paws-item {
   text-decoration: none;
