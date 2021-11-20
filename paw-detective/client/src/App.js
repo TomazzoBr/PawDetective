@@ -67,7 +67,7 @@ function App() {
   ///////////////////////////
   const handleChange = (e) => {
     if (e.target.files[0]) {
-      formHandler (e)
+      formHandler(e)
     }
   };
   const handleUpload = () => { //This one needs firebase config to upload pictures
@@ -148,7 +148,6 @@ function App() {
   ///////////////////////////
   const formHandler = (e) => {
     //We just need to work on the lat,long that come from Map.js
-    // console.log(e)
     const name = e.target.name;
     let value = e.target.value;
     // console.log(name, value)
