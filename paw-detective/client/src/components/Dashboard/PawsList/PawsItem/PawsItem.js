@@ -33,7 +33,7 @@ const PawsItem = ({ paw, key }) => {
             className="delete_btn"
             onClick={() => {
               if (window.confirm("Are you sure you wish to delete this item?"))
-                deletePawsHandler(key);
+                deletePawsHandler(paw._id);
             }}
           >
             <span
