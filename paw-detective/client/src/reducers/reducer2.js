@@ -1,4 +1,4 @@
-export const reducer2 = (state = [], action) => {
+const reducer2 = (state = [], action) => {
   switch (action.type) {
   case 'action2': {
     const { data } = action; //the payload
@@ -9,3 +9,5 @@ export const reducer2 = (state = [], action) => {
     return state;
   }
 };
+
+export default reducer2;
