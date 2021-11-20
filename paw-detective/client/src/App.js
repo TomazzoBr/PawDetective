@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Routes, Route } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ApiService from "./services/ApiService";
 import GlobalContext from "./services/globalContext";
@@ -49,8 +49,11 @@ function App() {
   const [selected, setSelected] = useState(null);
 
   const [paws, setPaws] = useState([]);
-  const [filteredPaws, setFilteredPaws] = useState([]);
   const [filterBtn, setFilterBtn] = useState('All');
+
+  const filter = useSelector(state => state.filterBtn);
+  const dispatch = useDispatch();
+  console.log(filter)
 
   // I set is as string just cause key (id) will be an string too
   // But we should work with another key instead of ._id
@@ -134,28 +137,12 @@ function App() {
     });
   };
 
-  const filterPaws = (lostOrFound) => {
-
-    console.log(lostOrFound);
-    // if (lostOrFound === "Lost") {
-    //   const lostList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
-    //   return setFilteredPaws(lostList);
-    // }
-    // if (lostOrFound === "Found") {
-    //   const foundList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
-    //   return setFilteredPaws(foundList);
-    // }
-    // return setFilteredPaws(paws);
-  };
-
   const deletePawsHandler = async () => {
     await ApiService.deletePaws(paws[0]._id);
     setPaws((prev) =>
       prev.filter((notDeletedPaw) => notDeletedPaw._id !== paws._id)
     );
-    setFilteredPaws((prev) =>
-      prev.filter((notDeletedPaw) => notDeletedPaw._id !== paws._id)
-    );
+
   };
 
   const getAllPaws = () => {
@@ -166,7 +153,6 @@ function App() {
         return pawB - pawA;
       });
       setPaws(sortedPaws);
-      setFilteredPaws(sortedPaws);
     });
   };
 
@@ -217,34 +203,28 @@ function App() {
   ///////////////////////////
   //This is gonna be a massive object and component (Whoever wants to implement redux or modularize functions, here's your time to shine)
   const customProps = {
+    // states
     image,
     url,
-    progress,
-    handleChange,
-    handleUpload,//States + fn from Pictures Component
-
-    animalForm,
-    formHandler,
-    handleSubmit, //States + fn from PawsForm Component
-
+    progress, // Pictures Component
+    animalForm, //PawsForm Component
     marker,
-    selected,
+    selected, //Map Component
+    paws, //Dashboard Component
+    selectedAnimal, //PawsProfile Component
+    filterBtn, //PawsItem Component
+
+    // functions
+    handleChange,
+    handleUpload, //Pictures Component
+    formHandler,
+    handleSubmit, //PawsForm Component
     setMarker,
-    setSelected, //States from Map Component
-
-    paws,
-    filteredPaws,
-    filterPaws, //States + fn from Dashboard Component
-
+    setSelected, //Map Component
     deletePawsHandler,
     setPaws,
-    setFilteredPaws, //Fn from PawsItem Component
-
-    selectedAnimal,
-    changeAnimalModal, //States + fn from PawsProfile Component
-
-    filterBtn,
-    changeFilter, //Fn from PawsItem Component
+    changeFilter, // PawsItem Component
+    changeAnimalModal, //PawsProfile Component
   };
 
   return (
