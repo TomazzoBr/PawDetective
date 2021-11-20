@@ -74,7 +74,10 @@ function App() {
     }
   };
   const handleUpload = () => { //This one needs firebase config to upload pictures
+    console.log(storage)
+
     if (image) {
+      console.log(image)
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
       uploadTask.on(
         "state_changed",
@@ -108,7 +111,6 @@ function App() {
     ApiService.postPaws(data, token); //We still miss the email form somehow
   }
   const handleSubmit = (e) => {
-    console.log(animalForm)
     e.preventDefault();
 
     if (!animalForm.description && !animalForm.picture && !animalForm.location) {
@@ -155,6 +157,7 @@ function App() {
   ///////Custom Fn///////////
   ///////////////////////////
   const formHandler = (e) => {
+    console.log(e)
     //We just need to work on the lat,long that come from Map.js
     const name = e.target.name;
     let value = e.target.value;
@@ -167,7 +170,8 @@ function App() {
       }
     }
     if (name === 'picture') {
-      value = e.target.files[0]
+      value = e.target.files[0].name;
+      setImage(e.target.files[0])
     }
     const animal = {...animalForm}
 
