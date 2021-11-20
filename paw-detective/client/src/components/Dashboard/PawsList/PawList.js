@@ -8,16 +8,21 @@ import globalContext from "../../../services/globalContext"
 const PawsList = () => {
 
   const {customProps} = useContext(globalContext);
-  const {paws} = customProps
+  const {paws, filterBtn} = customProps
 
-  const pawsList =
-    paws.length &&
-    paws.map((paw) => (
-      <PawsItem
-        paw={paw}
-        key={paw.id}
-      />
-    ));
+  const pawsList = paws
+      .filter(paw => function(paw) {
+        console.log('from pawlist',filterBtn)
+        if (filterBtn === "All") {
+          return paw;
+        } else if (filterBtn === "Lost") {
+          return paw.lostOrFound === true;
+        } else if (filterBtn === "Found") {
+          return paw.lostOrFound === false;
+        }
+      })
+      .map((paw) => (<PawsItem paw={paw} key={paw.id}/>));
+
 
   return (
     <ul className="list-container">

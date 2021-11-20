@@ -50,8 +50,11 @@ function App() {
 
   const [paws, setPaws] = useState([]);
   const [filteredPaws, setFilteredPaws] = useState([]);
+  const [filterBtn, setFilterBtn] = useState('All');
 
-  const [selectedAnimal, setSelectedAnimal] = useState(0);
+  // I set is as string just cause key (id) will be an string too
+  // But we should work with another key instead of ._id
+  const [selectedAnimal, setSelectedAnimal] = useState("0");
 
   ///////////////////////////
   ///////FUNCTIONS///////////
@@ -132,15 +135,17 @@ function App() {
   };
 
   const filterPaws = (lostOrFound) => {
-    if (lostOrFound === "Lost") {
-      const lostList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
-      return setFilteredPaws(lostList);
-    }
-    if (lostOrFound === "Found") {
-      const foundList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
-      return setFilteredPaws(foundList);
-    }
-    return setFilteredPaws(paws);
+
+    console.log(lostOrFound);
+    // if (lostOrFound === "Lost") {
+    //   const lostList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
+    //   return setFilteredPaws(lostList);
+    // }
+    // if (lostOrFound === "Found") {
+    //   const foundList = paws.filter((paw) => paw.lostOrFound === lostOrFound);
+    //   return setFilteredPaws(foundList);
+    // }
+    // return setFilteredPaws(paws);
   };
 
   const deletePawsHandler = async () => {
@@ -190,7 +195,11 @@ function App() {
     setAnimal(animal)
   }
   const changeAnimalModal = (id) => {
+    window.scrollTo(0, 0);
     setSelectedAnimal(id)
+  }
+  const changeFilter = (flag) => {
+    setFilterBtn(flag)
   }
 
   ///////////////////////////
@@ -233,6 +242,9 @@ function App() {
 
     selectedAnimal,
     changeAnimalModal, //States + fn from PawsProfile Component
+
+    filterBtn,
+    changeFilter, //Fn from PawsItem Component
   };
 
   return (

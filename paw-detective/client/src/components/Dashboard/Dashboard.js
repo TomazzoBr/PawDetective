@@ -2,7 +2,7 @@ import "./../../styles/Dashboard.css";
 
 // import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import globalContext from "../../services/globalContext";
 
@@ -13,12 +13,14 @@ import PawsProfile from "../PawsProfile/PawsProfile";
 
 const Dashboard = () => {
   const { customProps } = useContext(globalContext);
-  const { filterPaws, selectedAnimal } = customProps;
+  const { changeFilter, selectedAnimal } = customProps;
+
+  useEffect(() => {},[selectedAnimal])
 
   const navigate = useNavigate();
   // const { user } = useAuth0();
 
-  const modalAnimal = (selectedAnimal === 0) 
+  const modalAnimal = selectedAnimal === "0" 
     ? null 
     : <PawsProfile/>
 
@@ -43,16 +45,16 @@ const Dashboard = () => {
           <Map />
 
           <label>Lost or Found?</label>
-          <div className="lost-found-bar">
-            <select
-              className="lost-found-scroll"
-              onChange={(e) => filterPaws(e.target.value)}
-            >
-              <option value="All">All</option>
-              <option value="Lost">Lost</option>
-              <option value="Found">Found</option>
-            </select>
-          </div>
+            <div className="lost-found-bar">
+              <select
+                className="lost-found-scroll"
+                onChange={(e) => {changeFilter(e.target.value)}}
+              >
+                <option value="All">All</option>
+                <option value="Lost">Lost</option>
+                <option value="Found">Found</option>
+              </select>
+            </div>
 
           <PawsList />
         </div>
