@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:3005";
 async function getPaws() {
   try {
     const allPaws = await fetch(`${BASE_URL}/paws`);
-    return await allPaws.json();
+    return allPaws.json();
   } catch (error) {
     console.log(error);
   }
@@ -21,7 +21,7 @@ async function postPaws(data, token) {
       },
       body: JSON.stringify(data),
     });
-    return await newPaws.json();
+    return newPaws.json();
   } catch (error) {
     console.log(error);
   }

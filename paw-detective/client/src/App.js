@@ -3,13 +3,15 @@ import "./styles/App.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
+
 import { useState, useEffect } from "react";
+
 import { useSelector, useDispatch } from 'react-redux';
+import { action1, action2 } from './actions/index'
 
 import ApiService from "./services/ApiService";
 import GlobalContext from "./services/globalContext";
 import { storage } from "./services/firebaseConfig";
-// import { addTodo, completed, decrement, increment } from './actions'; //actions to dispatch
 
 import Dashboard from "./components/Dashboard/Dashboard";
 import PawsForm from "./components/PawsForm/PawsForm";
@@ -22,6 +24,7 @@ function App() {
   // } = useAuth0();
 
   const { user, getAccessTokenSilently } = useAuth0();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   ////////////////////////
   ///////STATES///////////
@@ -33,7 +36,7 @@ function App() {
   const [animalForm, setAnimal] = useState({
     lostOrFound: false,
     picture: "",
-    animal: "",
+    animal: "Dog",
     description: "",
     location: "",
     lat: 0,
@@ -57,7 +60,7 @@ function App() {
   useEffect(() => {
     getAllPaws();
     mapAlert();
-  }, []);
+  }, [paws]);
 
   ///////////////////////////
   ///////FUNCTIONS///////////
@@ -112,7 +115,7 @@ function App() {
     setAnimal({
       lostOrFound: false,
       picture: "",
-      animal: "",
+      animal: "Dog",
       description: "",
       location: "",
       lat: 0,
@@ -129,14 +132,19 @@ function App() {
   };
 
   const getAllPaws = () => {
-    ApiService.getPaws().then((paws) => {
-      const sortedPaws = paws.sort((a, b) => {
-        const pawA = new Date(a.date).getTime();
-        const pawB = new Date(b.date).getTime();
-        return pawB - pawA;
+    ApiService.getPaws()
+      .then((paws) => {
+        if (paws) {
+          const sortedPaws = paws.sort((a, b) => {
+            const pawA = new Date(a.date).getTime();
+            const pawB = new Date(b.date).getTime();
+            return pawB - pawA;
+          });
+          setPaws(sortedPaws)
+        } else {
+          setPaws([]);
+        }
       });
-      setPaws(sortedPaws);
-    });
   };
 
   ///////////////////////////
@@ -178,11 +186,9 @@ function App() {
     if(process.env.REACT_APP_GOOGLE_MAPS_API_KEY.length > 0) alert('BE CAREFUL YOU HAVE MAPS API WORKING')
   }
 
-
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
-
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
 
@@ -191,31 +197,27 @@ function App() {
   ///////////////////////////
   //This is gonna be a massive object and component (Whoever wants to implement redux or modularize functions, here's your time to shine)
   const customProps = {
+    // states
     image,
     url,
-    progress,
-    handleChange,
-    handleUpload,//States + fn from Pictures Component
-
-    animalForm,
-    formHandler,
-    handleSubmit, //States + fn from PawsForm Component
-
+    progress, // Pictures Component
+    animalForm, //PawsForm Component
     marker,
-    selected,
+    selected, //Map Component
+    paws, //Dashboard Component
+    selectedAnimal, //PawsProfile Component
+    filterBtn, //PawsItem Component
+
+    // functions
+    handleChange,
+    handleUpload, //Pictures Component
+    formHandler,
+    handleSubmit, //PawsForm Component
     setMarker,
-    setSelected, //States from Map Component
-
-    paws, //States + fn from Dashboard Component
-
+    setSelected, //Map Component
     deletePawsHandler,
-    setPaws, //Fn from PawsItem Component
-
-    selectedAnimal,
-    changeAnimalModal, //States + fn from PawsProfile Component
-
-    filterBtn,
-    changeFilter, //Fn from PawsItem Component
+    changeFilter, // PawsItem Component
+    changeAnimalModal, //PawsProfile Component
   };
 
   return (
