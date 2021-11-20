@@ -206,7 +206,7 @@ function App() {
   /////////EXTRAS////////////
   ///////////////////////////
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_PLACES_API_KEY,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
 
   if (loadError) return "Error loading maps";
