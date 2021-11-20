@@ -1,5 +1,8 @@
-const changeFilterBtn = value => ({
-  type: 'FILTER'
+export const action1 = () => ({
+  type: 'Action1',
 })
 
-export default changeFilterBtn
+export const action2 = (data) => ({
+  type: 'Action2',
+  data,
+})
