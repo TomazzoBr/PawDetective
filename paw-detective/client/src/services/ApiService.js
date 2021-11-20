@@ -9,29 +9,8 @@ async function getPaws() {
   }
 }
 
-async function postPaws(body) {
-  const {
-    email,
-    token,
-    lostOrFound,
-    picture,
-    animal,
-    description,
-    location,
-    lat,
-    long,
-  } = body;
-
-  const pet = {
-    lostOrFound,
-    picture,
-    animal,
-    description,
-    location,
-    lat,
-    long,
-    email,
-  };
+async function postPaws(data, token) {
+  // We dont send the email yet
 
   try {
     const newPaws = await fetch(`${BASE_URL}/paws`, {
@@ -40,7 +19,7 @@ async function postPaws(body) {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(pet),
+      body: JSON.stringify(data),
     });
     return await newPaws.json();
   } catch (error) {

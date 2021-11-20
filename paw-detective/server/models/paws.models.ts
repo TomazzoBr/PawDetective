@@ -10,19 +10,19 @@ interface PawInterface {
   location: string,
   lat: number,
   long: number,
-  email: string
+  // email: string
 }
 
 const PawsSchema = new Schema<PawInterface>({
   lostOrFound: { type: Boolean, required: true },
-  picture: { type: String, required: true },
+  picture: { type: String, default: "https://cdn.britannica.com/q:60/59/173659-131-464B9889/Animal-Mammal-Goat-Ruminant-goat-Capra-aegagrus.jpg" },
   animal: { type: String, required: true },
   description: { type: String, required: true },
   date: { type: Date, default: Date.now },
   location: { type: String, required: true },
-  lat: { type: Number, required: true },
-  long: { type: Number, required: true },
-  email: { type: String, required: true },
+  lat: { type: Number },
+  long: { type: Number },
+  // email: { type: String, required: true },
 });
 
 export default mongoose.model("Paws", PawsSchema);

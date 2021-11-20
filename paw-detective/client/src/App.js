@@ -1,7 +1,7 @@
 import "./styles/App.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,6 @@ import { storage } from "./services/firebaseConfig";
 // import { addTodo, completed, decrement, increment } from './actions'; //actions to dispatch
 
 import Dashboard from "./components/Dashboard/Dashboard";
-import PawsProfile from "./components/PawsProfile/PawsProfile";
 import PawsForm from "./components/PawsForm/PawsForm";
 // import ProtectedRoute from "./components/auth/Protected-route";
 
@@ -23,11 +22,7 @@ function App() {
   // } = useAuth0();
 
   const { user, getAccessTokenSilently } = useAuth0();
-
-  useEffect(() => {
-    getAllPaws();
-  }, []);
-
+  const navigate = useNavigate();
   ////////////////////////
   ///////STATES///////////
   ////////////////////////
@@ -41,8 +36,8 @@ function App() {
     animal: "",
     description: "",
     location: "",
-    lat: "",
-    long: ""
+    lat: 0,
+    long: 0
   });
 
   const [marker, setMarker] = useState(null);
@@ -58,6 +53,15 @@ function App() {
   // I set is as string just cause key (id) will be an string too
   // But we should work with another key instead of ._id
   const [selectedAnimal, setSelectedAnimal] = useState("0");
+
+  ////////////////////////
+  ///////HOOKS///////////
+  ////////////////////////
+
+  useEffect(() => {
+    getAllPaws();
+    mapAlert();
+  }, []);
 
   ///////////////////////////
   ///////FUNCTIONS///////////
@@ -96,27 +100,10 @@ function App() {
     }
   };
 
-  async function postPawHandler(
-    lostOrFound,
-    picture,
-    animal,
-    description,
-    location,
-    lat,
-    long
-  ) {
-    const token = await getAccessTokenSilently();
-    ApiService.postPaws({
-      lostOrFound,
-      picture,
-      animal,
-      description,
-      location,
-      lat,
-      long,
-      token,
-      // email,
-    });
+  async function postPawHandler(data) {
+    const token = "masterKey"
+    // const token = await getAccessTokenSilently();
+    ApiService.postPaws(data, token); //We still miss the email form somehow
   }
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -132,17 +119,17 @@ function App() {
       animal: "",
       description: "",
       location: "",
-      lat: "",
-      long: ""
+      lat: 0,
+      long: 0
     });
+    navigate("/")
   };
 
-  const deletePawsHandler = async () => {
-    await ApiService.deletePaws(paws[0]._id);
-    setPaws((prev) =>
-      prev.filter((notDeletedPaw) => notDeletedPaw._id !== paws._id)
-    );
+  const deletePawsHandler = async (key) => {
+    await ApiService.deletePaws(key); //key is ._id
+    const newPaws = paws.filter(paw => paw._id !== paws._id)
 
+    setPaws(newPaws);
   };
 
   const getAllPaws = () => {
@@ -191,8 +178,13 @@ function App() {
   ///////////////////////////
   /////////EXTRAS////////////
   ///////////////////////////
+  const mapAlert = () => {
+    if(process.env.REACT_APP_GOOGLE_MAPS_API_KEY.length > 0) alert('BE CAREFUL YOU HAVE MAPS API WORKING')
+  }
+
+
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_PLACES_API_KEY,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
 
   if (loadError) return "Error loading maps";
