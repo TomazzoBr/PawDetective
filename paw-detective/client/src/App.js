@@ -46,9 +46,8 @@ function App() {
   const [paws, setPaws] = useState([]);
   const [filterBtn, setFilterBtn] = useState('All');
 
-  const filter = useSelector(state => state.filterBtn);
-  const dispatch = useDispatch();
-  console.log(filter)
+  // const filter = useSelector(state => state.filterBtn);
+  // const dispatch = useDispatch();
 
   // I set is as string just cause key (id) will be an string too
   // But we should work with another key instead of ._id
@@ -106,6 +105,7 @@ function App() {
     ApiService.postPaws(data, token); //We still miss the email form somehow
   }
   const handleSubmit = (e) => {
+    console.log(animalForm)
     e.preventDefault();
 
     if (!animalForm.description && !animalForm.picture && !animalForm.location) {
