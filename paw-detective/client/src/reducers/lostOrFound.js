@@ -1,21 +1,10 @@
-const lostOrFound = (state = "Lost", action) => {
+const filterBtn = (state = "All", action) => {
   switch (action.type) {
-    case 'ADD_TODO':
-      return [
-        ...state,
-        {
-          id: action.id,
-          text: action.text,
-          completed: false
-        }
-      ]
-    case 'TOGGLE_TODO':
-      return state.map(todo =>
-        (todo.id === action.id)
-          ? {...todo, completed: !todo.completed}
-          : todo
-      )
+    case 'FILTER':
+      return action
     default:
-      return state
+      return action
   }
 }
+
+export default filterBtn;
