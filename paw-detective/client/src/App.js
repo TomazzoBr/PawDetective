@@ -191,31 +191,28 @@ function App() {
   ///////////////////////////
   //This is gonna be a massive object and component (Whoever wants to implement redux or modularize functions, here's your time to shine)
   const customProps = {
+    // states
     image,
     url,
-    progress,
-    handleChange,
-    handleUpload,//States + fn from Pictures Component
-
-    animalForm,
-    formHandler,
-    handleSubmit, //States + fn from PawsForm Component
-
+    progress, // Pictures Component
+    animalForm, //PawsForm Component
     marker,
-    selected,
+    selected, //Map Component
+    paws, //Dashboard Component
+    selectedAnimal, //PawsProfile Component
+    filterBtn, //PawsItem Component
+    
+    // functions
+    handleChange,
+    handleUpload, //Pictures Component
+    formHandler,
+    handleSubmit, //PawsForm Component
     setMarker,
-    setSelected, //States from Map Component
-
-    paws, //States + fn from Dashboard Component
-
+    setSelected, //Map Component
     deletePawsHandler,
-    setPaws, //Fn from PawsItem Component
-
-    selectedAnimal,
-    changeAnimalModal, //States + fn from PawsProfile Component
-
-    filterBtn,
-    changeFilter, //Fn from PawsItem Component
+    setPaws,
+    changeFilter, // PawsItem Component
+    changeAnimalModal, //PawsProfile Component
   };
 
   return (
