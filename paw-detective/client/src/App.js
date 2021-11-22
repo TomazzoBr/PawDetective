@@ -155,7 +155,13 @@ function App() {
   ///////////////////////////
   const formHandler = (e) => {
     //We just need to work on the lat,long that come from Map.js
-    if (e && !e.target) {
+    if (e.latLng) {
+      const newAnimal = Object.assign({}, animalForm);
+      newAnimal.lat = e.latLng.lat();
+      newAnimal.long = e.latLng.lng();
+      setAnimal(newAnimal)
+    }
+    else if (e && !e.target) {
       const newImage = Object.assign({}, image);
       newImage.name = e;
       setImage(newImage);
@@ -166,7 +172,6 @@ function App() {
     else {
       const name = e.target.name;
       let value = e.target.value;
-      // console.log(name, value)
       if (name === 'lostOrFound') {
         if (value === 'Lost') {
           value = true

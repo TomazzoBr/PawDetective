@@ -14,7 +14,7 @@ const Map = ({profileMarker}) => {
 
   const {customProps} = useContext(globalContext);
   const {paws, marker, selected,
-    setMarker, setSelected, 
+    setMarker, setSelected,
     animalForm, formHandler //for lat and long
   } = customProps;
 
@@ -38,15 +38,13 @@ const Map = ({profileMarker}) => {
     ));
 
   const onMapClick = (e) => {
+    console.log(e.latLng.lat())
     setMarker(() => ({
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
       time: new Date(),
     }));
-    if (lat && long) {
-      formHandler(e.latLng.lat());
-      formHandler(e.latLng.lng());
-    }
+    formHandler(e);
   }
   const onMapLoad = (map) => {
     mapRef.current = map;
