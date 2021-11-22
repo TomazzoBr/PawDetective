@@ -31,8 +31,9 @@ function App() {
   const { user, getAccessTokenSilently } = useAuth0();
 
   const navigate = useNavigate();
+
   ////////////////////////
-  ///////STATES///////////
+  /////  STATES  /////////
   ////////////////////////
 
   const [url, setUrl] = useState("");
@@ -44,7 +45,7 @@ function App() {
   const [paws, setPaws] = useState([]);
 
   ////////////////////////
-  ///////HOOKS///////////
+  //////  HOOKS  /////////
   ////////////////////////
 
   useEffect(() => {
@@ -53,7 +54,7 @@ function App() {
   }, [paws]);
 
   ///////////////////////////
-  ///////FUNCTIONS///////////
+  /////  FUNCTIONS  /////////
   ///////////////////////////
   
   const handleSubmit = (e) => {
@@ -73,8 +74,8 @@ function App() {
   
   
   ///////////////////////////
-  //////////API//////////////
-  ///////FUNCTIONS///////////
+  ////////  API  ////////////
+  /////  FUNCTIONS  /////////
   ///////////////////////////
   const getAllPaws = () => {
     ApiService.getPaws()
@@ -104,7 +105,7 @@ function App() {
   };
 
   ////////////////////////////////////////////////
-  ////////////FIREBASE PICTURE UPDATE/////////////
+  //////////  FIREBASE PICTURE UPDATE  ///////////
   ////////////////////////////////////////////////
   const handleUpload = () => {
     if (image) {
@@ -137,7 +138,7 @@ function App() {
   
   
   ///////////////////////////
-  /////////EXTRAS////////////
+  ///////  EXTRAS  //////////
   ///////////////////////////
   const mapAlert = () => {
     if(process.env.REACT_APP_GOOGLE_MAPS_API_KEY.length > 0) alert('BE CAREFUL YOU HAVE MAPS API WORKING')
@@ -150,17 +151,17 @@ function App() {
   if (!isLoaded) return "Loading Maps";
 
   ////////////////////////////
-  /////////CONTEXT////////////
+  ///////  CONTEXT  //////////
   ///////////////////////////
   //This is gonna be a massive object and component (Whoever wants to implement redux or modularize functions, here's your time to shine)
   const customProps = {
     // states
-    image,
     url,
     progress, // Pictures Component
     marker,
     selected, //Map Component
     paws, //Dashboard Component
+
     // functions
     handleUpload, //Pictures Component
     handleSubmit, //PawsForm Component
@@ -172,7 +173,6 @@ function App() {
   return (
     <GlobalContext.Provider value={{ customProps }}>
       <div className="App">
-       {/* <p>test</p> */}
         <Routes>
           <Route path="/" element={<Dashboard/>} />
 

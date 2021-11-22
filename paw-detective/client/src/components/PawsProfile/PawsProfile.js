@@ -30,9 +30,6 @@ const PawsProfile = () => {
     long,
     date,
   } = animalByID
-  console.log(animalByID);
-  // const lostOrFound="Lost";
-  // const address="Home";
 
   const profileMarker = {
     lat,
