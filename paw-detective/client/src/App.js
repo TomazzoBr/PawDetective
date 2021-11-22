@@ -128,6 +128,7 @@ function App() {
   };
 
   const deletePawsHandler = async (key) => {
+    console.log(paws, key);
     await ApiService.deletePaws(key); //key is ._id
     const newPaws = paws.filter(paw => paw._id !== paws._id)
 
@@ -220,11 +221,6 @@ function App() {
     paws, //Dashboard Component
     selectedAnimal, //PawsProfile Component
     filterBtn, //PawsItem Component
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> development
     // functions
     handleChange,
     handleUpload, //Pictures Component
@@ -233,10 +229,6 @@ function App() {
     setMarker,
     setSelected, //Map Component
     deletePawsHandler,
-<<<<<<< HEAD
-    setPaws,
-=======
->>>>>>> development
     changeFilter, // PawsItem Component
     changeAnimalModal, //PawsProfile Component
   };
