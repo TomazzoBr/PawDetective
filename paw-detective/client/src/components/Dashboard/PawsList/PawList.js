@@ -3,12 +3,16 @@ import "./../../../styles/PawsList.css";
 import PawsItem from "./PawsItem/PawsItem";
 import { useContext } from "react";
 
+import { useSelector } from 'react-redux';
+
 import globalContext from "../../../services/globalContext"
 
 const PawsList = () => {
 
   const {customProps} = useContext(globalContext);
-  const {paws, filterBtn} = customProps
+  const {paws} = customProps;
+
+  const filterBtn = useSelector(state => state.filterBtn);
 
   const renderPaws = (paws) => {
     if (paws.length < 1) {
@@ -23,7 +27,7 @@ const PawsList = () => {
         }
         return paws
       })
-      .map((paw) => (<PawsItem paw={paw} key={paw.id}/>));
+      .map((paw) => (<PawsItem paw={paw} key={paw._id}/>));
     }
   }
 

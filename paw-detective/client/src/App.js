@@ -24,7 +24,7 @@ function App() {
   // } = useAuth0();
 
   const { user, getAccessTokenSilently } = useAuth0();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   ////////////////////////
   ///////STATES///////////
@@ -47,7 +47,6 @@ function App() {
   const [selected, setSelected] = useState(null);
 
   const [paws, setPaws] = useState([]);
-  const [filterBtn, setFilterBtn] = useState('All');
 
   // const filter = useSelector(state => state.filterBtn);
   // const dispatch = useDispatch();
@@ -129,7 +128,6 @@ function App() {
   };
 
   const deletePawsHandler = async (key) => {
-    console.log(key);
     await ApiService.deletePaws(key); //key is ._id
     const newPaws = paws.filter(paw => paw._id !== paws._id)
 
@@ -190,10 +188,6 @@ function App() {
     window.scrollTo(0, 0);
     setSelectedAnimal(id)
   }
-  const changeFilter = (flag) => {
-    setFilterBtn(flag)
-  }
-
   ///////////////////////////
   /////////EXTRAS////////////
   ///////////////////////////
@@ -221,7 +215,6 @@ function App() {
     selected, //Map Component
     paws, //Dashboard Component
     selectedAnimal, //PawsProfile Component
-    filterBtn, //PawsItem Component
     // functions
     handleChange,
     handleUpload, //Pictures Component
@@ -230,13 +223,13 @@ function App() {
     setMarker,
     setSelected, //Map Component
     deletePawsHandler,
-    changeFilter, // PawsItem Component
     changeAnimalModal, //PawsProfile Component
   };
 
   return (
     <GlobalContext.Provider value={{ customProps }}>
       <div className="App">
+       {/* <p>test</p> */}
         <Routes>
           <Route path="/" element={<Dashboard/>} />
 

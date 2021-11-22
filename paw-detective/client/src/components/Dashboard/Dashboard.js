@@ -4,6 +4,9 @@ import "./../../styles/Dashboard.css";
 import { useNavigate } from "react-router";
 import { useContext, useEffect } from "react";
 
+import { useDispatch } from 'react-redux';
+import { changeDashboardFilter } from '../../actions/index';
+
 import globalContext from "../../services/globalContext";
 
 import Header from "./Header/Header";
@@ -13,7 +16,9 @@ import PawsProfile from "../PawsProfile/PawsProfile";
 
 const Dashboard = () => {
   const { customProps } = useContext(globalContext);
-  const { changeFilter, selectedAnimal } = customProps;
+  const { selectedAnimal } = customProps;
+
+  const dispatch = useDispatch()
 
   useEffect(() => {},[selectedAnimal])
 
@@ -48,7 +53,7 @@ const Dashboard = () => {
             <div className="lost-found-bar">
               <select
                 className="lost-found-scroll"
-                onChange={(e) => {changeFilter(e.target.value)}}
+                onChange={(e) => {dispatch(changeDashboardFilter(e.target.value))}}
               >
                 <option value="All">All</option>
                 <option value="Lost">Lost</option>

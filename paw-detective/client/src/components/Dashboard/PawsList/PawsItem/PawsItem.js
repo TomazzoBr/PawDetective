@@ -5,7 +5,7 @@ import { useContext} from 'react'
 
 import globalContext from '../../../../services/globalContext'
 
-const PawsItem = ({ paw, key }) => {
+const PawsItem = ({ paw }) => {
 
   const {customProps} = useContext(globalContext);
   const {deletePawsHandler, changeAnimalModal} = customProps;
