@@ -55,10 +55,10 @@ function App() {
   ///////////////////////////
   ///////FUNCTIONS///////////
   ///////////////////////////
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!animalForm.description && !animalForm.picture && !animalForm.location) {
       alert("please fill in all the fields");
       return;
@@ -69,9 +69,7 @@ function App() {
     setProgress(0);
     navigate("/")
   };
-  
-  
-  
+
   ///////////////////////////
   //////////API//////////////
   ///////FUNCTIONS///////////
@@ -99,7 +97,7 @@ function App() {
   const deletePawsHandler = async (key) => {
     await ApiService.deletePaws(key); //key is ._id
     const newPaws = paws.filter(paw => paw._id !== paws._id)
-    
+
     setPaws(newPaws);
   };
 
@@ -134,15 +132,15 @@ function App() {
       );
     }
   };
-  
-  
+
+
   ///////////////////////////
   /////////EXTRAS////////////
   ///////////////////////////
   const mapAlert = () => {
     if(process.env.REACT_APP_GOOGLE_MAPS_API_KEY.length > 0) alert('BE CAREFUL YOU HAVE MAPS API WORKING')
   }
-  
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
