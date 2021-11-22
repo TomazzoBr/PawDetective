@@ -48,10 +48,6 @@ function App() {
 
   const [paws, setPaws] = useState([]);
 
-  // I set is as string just cause key (id) will be an string too
-  // But we should work with another key instead of ._id
-  const [selectedAnimal, setSelectedAnimal] = useState("0");
-
   ////////////////////////
   ///////HOOKS///////////
   ////////////////////////
@@ -185,10 +181,6 @@ function App() {
       setAnimal(animal)
     }
   }
-  const changeAnimalModal = (id) => {
-    window.scrollTo(0, 0);
-    setSelectedAnimal(id)
-  }
   ///////////////////////////
   /////////EXTRAS////////////
   ///////////////////////////
@@ -215,7 +207,6 @@ function App() {
     marker,
     selected, //Map Component
     paws, //Dashboard Component
-    selectedAnimal, //PawsProfile Component
     // functions
     handleChange,
     handleUpload, //Pictures Component
@@ -223,8 +214,7 @@ function App() {
     handleSubmit, //PawsForm Component
     setMarker,
     setSelected, //Map Component
-    deletePawsHandler,
-    changeAnimalModal, //PawsProfile Component
+    deletePawsHandler
   };
 
   return (
