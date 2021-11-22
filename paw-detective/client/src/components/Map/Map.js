@@ -6,19 +6,21 @@ import { formatRelative } from "date-fns";
 import { FaLocationArrow } from "react-icons/fa";
 
 import { useCallback, useRef, useContext } from "react";
+import { useDispatch } from 'react-redux';
+
+import { mapFormCords } from '../../actions/index'
 
 import MapMarker from "./MapMarker";
 import globalContext from '../../services/globalContext'
 
 const Map = ({profileMarker}) => {
 
+  const dispatch = useDispatch();
+
   const {customProps} = useContext(globalContext);
   const {paws, marker, selected,
     setMarker, setSelected,
-    animalForm, formHandler //for lat and long
   } = customProps;
-
-  const {lat,long} = animalForm;
 
   const mapRef = useRef();
 
@@ -38,36 +40,17 @@ const Map = ({profileMarker}) => {
     ));
 
   const onMapClick = (e) => {
-    console.log(e.latLng.lat())
     setMarker(() => ({
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
       time: new Date(),
     }));
-    formHandler(e);
+    dispatch(mapFormCords(e));
   }
   const onMapLoad = (map) => {
     mapRef.current = map;
   }
 
-  // const onMapClick = useCallback( //Why use callback instead of just making a cb call?
-  //   (e) => {
-  //     setMarker(() => ({
-  //       lat: e.latLng.lat(),
-  //       lng: e.latLng.lng(),
-  //       time: new Date(),
-  //     }));
-  //     if (setLat && setLong) {
-  //       setLat(e.latLng.lat());
-  //       setLong(e.latLng.lng());
-  //     }
-  //   },
-  //   [setLat, setLong]
-  // );
-
-  // const onMapLoad = useCallback((map) => {
-  //   mapRef.current = map;
-  // }, []);
   const panTo = useCallback(({ lat, lng }) => {
       mapRef.current.panTo({ lat, lng });
       mapRef.current.setZoom(14);
@@ -102,7 +85,7 @@ const Map = ({profileMarker}) => {
       </button>
     );
   };
-
+  
   return (
     <div className="map-container">
       <Locate panTo={panTo} />
@@ -112,7 +95,7 @@ const Map = ({profileMarker}) => {
         zoom={8}
         center={
           profileMarker
-            ? { lat: profileMarker.lat, lng: profileMarker.lng }
+            ? { lat: profileMarker.profileMarker.lat, lng: profileMarker.profileMarker.long }
             : center
         }
         onClick={(e) => onMapClick(e)}
@@ -125,7 +108,7 @@ const Map = ({profileMarker}) => {
           : null}
 
         {profileMarker
-          ? (<MapMarker marker={profileMarker} setSelected={setSelected} />)
+          ? (<MapMarker marker={profileMarker.profileMarker} setSelected={setSelected} />)
           : null}
 
 

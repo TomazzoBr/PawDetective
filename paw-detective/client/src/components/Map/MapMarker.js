@@ -5,7 +5,7 @@ const MapMarker = ({ marker, setSelected }) => {
   return (
     <Marker
       key={marker.time}
-      position={{ lat: marker.lat, lng: marker.lng }}
+      position={{ lat: marker.lat, lng: marker.long }}
       icon={{
         url: image,
         scaledSize: new window.google.maps.Size(30, 30),

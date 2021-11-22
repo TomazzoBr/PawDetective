@@ -4,13 +4,9 @@ import { useContext, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '../../actions/index'
 
-import { FaHome } from "react-icons/fa";
-
 import globalContext from '../../services/globalContext'
 
 import Map from "../Map/Map";
-
-
 
 const PawsProfile = () => {
 
@@ -25,18 +21,18 @@ const PawsProfile = () => {
   const animalByID = paws.filter(paw => paw._id === selectedAnimal)[0];
 
   const {
-    // lostOrFound,
+    lostOrFound,
     picture,
     animal,
     description,
-    // address,
+    address,
     lat,
     long,
     date,
   } = animalByID
-
-  const lostOrFound="Lost";
-  const address="Home";
+  console.log(animalByID);
+  // const lostOrFound="Lost";
+  // const address="Home";
 
   const profileMarker = {
     lat,

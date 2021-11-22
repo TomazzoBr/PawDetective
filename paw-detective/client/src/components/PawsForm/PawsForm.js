@@ -1,7 +1,14 @@
 import "./../../styles/PawsForm.css";
-import { useContext } from "react";
-// dont need anymore useState or ApiService as you have everything in App component
 import { FaHome } from "react-icons/fa";
+
+import { useContext } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import {toggleIsLost, 
+  changeAnimalForm, 
+  changeDescriptionForm, 
+  changeLocationForm
+} from '../../actions/index'
+
 // import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import Map from "../Map/Map";
@@ -11,9 +18,13 @@ import globalContext from "../../services/globalContext";
 
 const PawsForm = () => {
   const { customProps } = useContext(globalContext);
-  const { animalForm, formHandler, handleSubmit } = customProps;
+  const { handleSubmit } = customProps;
+  
+  const animalForm = useSelector(state => state.form)
   const { lostOrFound, animal, description, location } = animalForm
 
+  const dispatch = useDispatch();
+  
   return (
     <div>
       <header className="form-header">
@@ -36,7 +47,7 @@ const PawsForm = () => {
             <select
               name="lostOrFound"
               value={lostOrFound ? "Lost" : "Found"}
-              onChange={(e) => formHandler(e)}
+              onChange={(e) => {dispatch(toggleIsLost(e.target.value))}} 
             >
               <option value="Lost">Lost</option>
               <option value="Found">Found</option>
@@ -55,7 +66,7 @@ const PawsForm = () => {
             <select 
               name="animal"
               value={animal} 
-              onChange={(e) => formHandler(e)}>
+              onChange={(e) => {dispatch(changeAnimalForm(e.target.value))}}>
               <option value="Dog">Dog</option>
               <option value="Cat">Cat</option>
               <option value="Bunny">Bunny</option>
@@ -71,7 +82,7 @@ const PawsForm = () => {
               type="text"
               placeholder="more details..."
               value={description}
-              onChange={(e) => formHandler(e)}
+              onChange={(e) => {dispatch(changeDescriptionForm(e.target.value))}}
             />
           </div>
           {/* choose the location you lost or found the pet */}
@@ -82,7 +93,7 @@ const PawsForm = () => {
               type="text"
               placeholder="where?"
               value={location}
-              onChange={(e) => formHandler(e)}
+              onChange={(e) => {dispatch(changeLocationForm(e.target.value))}}
             />
           </div>
 

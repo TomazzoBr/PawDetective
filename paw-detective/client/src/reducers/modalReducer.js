@@ -1,11 +1,12 @@
 const modalSelection = (state = "0", action) => {
-  window.scrollTo(0, 0);
   switch (action.type) {
-  case 'openModal': {
-    const {value} = action
-    return value
-  }
-  case 'closeModal': {
+    case 'openModal': {
+      window.scrollTo(0, 0);
+      const {value} = action
+      return value
+    }
+    case 'closeModal': {
+    window.scrollTo(0, 0);
     return "0"
   }
   default:

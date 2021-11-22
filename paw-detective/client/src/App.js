@@ -5,9 +5,8 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
 
 import { useState, useEffect } from "react";
-
 import { useSelector, useDispatch } from 'react-redux';
-import { action1, action2 } from './actions/index'
+import { savePictureUrl, resetForm } from './actions/index'
 
 import ApiService from "./services/ApiService";
 import GlobalContext from "./services/globalContext";
@@ -18,30 +17,26 @@ import PawsForm from "./components/PawsForm/PawsForm";
 // import ProtectedRoute from "./components/auth/Protected-route";
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  const animalForm = useSelector(state => state.form);
+  const image = useSelector(state => state.image);
+
   // const {
   //   user: { email },
   //   getAccessTokenSilently,
   // } = useAuth0();
 
   const { user, getAccessTokenSilently } = useAuth0();
-  // const dispatch = useDispatch();
+
   const navigate = useNavigate();
   ////////////////////////
   ///////STATES///////////
   ////////////////////////
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
   const [url, setUrl] = useState("");
   const [progress, setProgress] = useState(0);
-
-  const [animalForm, setAnimal] = useState({
-    lostOrFound: false,
-    picture: "",
-    animal: "Dog",
-    description: "",
-    location: "",
-    lat: 0,
-    long: 0
-  });
 
   const [marker, setMarker] = useState(null);
   const [selected, setSelected] = useState(null);
@@ -60,12 +55,58 @@ function App() {
   ///////////////////////////
   ///////FUNCTIONS///////////
   ///////////////////////////
-  const handleChange = (e) => {
-    if (e.target.files[0]) {
-      formHandler(e)
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (!animalForm.description && !animalForm.picture && !animalForm.location) {
+      alert("please fill in all the fields");
+      return;
     }
+    postPawHandler(animalForm);
+    dispatch(resetForm());
+    setUrl("");
+    setProgress(0);
+    navigate("/")
   };
-  const handleUpload = (e) => {
+  
+  
+  
+  ///////////////////////////
+  //////////API//////////////
+  ///////FUNCTIONS///////////
+  ///////////////////////////
+  const getAllPaws = () => {
+    ApiService.getPaws()
+    .then((paws) => {
+      if (paws) {
+        const sortedPaws = paws.sort((a, b) => {
+          const pawA = new Date(a.date).getTime();
+          const pawB = new Date(b.date).getTime();
+          return pawB - pawA;
+        });
+        setPaws(sortedPaws)
+      } else {
+        setPaws([]);
+      }
+    });
+  };
+  async function postPawHandler(data) {
+    const token = "masterKey"
+    // const token = await getAccessTokenSilently();
+    ApiService.postPaws(data, token); //We still miss the email form somehow
+  }
+  const deletePawsHandler = async (key) => {
+    await ApiService.deletePaws(key); //key is ._id
+    const newPaws = paws.filter(paw => paw._id !== paws._id)
+    
+    setPaws(newPaws);
+  };
+
+  ////////////////////////////////////////////////
+  ////////////FIREBASE PICTURE UPDATE/////////////
+  ////////////////////////////////////////////////
+  const handleUpload = () => {
     if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
       uploadTask.on(
@@ -87,107 +128,21 @@ function App() {
             .getDownloadURL()
             .then((url) => {
               setUrl(url);
-              formHandler(url);
+              dispatch(savePictureUrl(url))
             });
         }
       );
     }
   };
-
-  async function postPawHandler(data) {
-    const token = "masterKey"
-    // const token = await getAccessTokenSilently();
-    ApiService.postPaws(data, token); //We still miss the email form somehow
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!animalForm.description && !animalForm.picture && !animalForm.location) {
-      alert("please fill in all the fields");
-      return;
-    }
-    postPawHandler(animalForm);
-    setAnimal({
-      lostOrFound: false,
-      picture: "",
-      animal: "Dog",
-      description: "",
-      location: "",
-      lat: 0,
-      long: 0
-    });
-    setUrl("");
-    navigate("/")
-  };
-
-  const deletePawsHandler = async (key) => {
-    await ApiService.deletePaws(key); //key is ._id
-    const newPaws = paws.filter(paw => paw._id !== paws._id)
-
-    setPaws(newPaws);
-  };
-
-  const getAllPaws = () => {
-    ApiService.getPaws()
-      .then((paws) => {
-        if (paws) {
-          const sortedPaws = paws.sort((a, b) => {
-            const pawA = new Date(a.date).getTime();
-            const pawB = new Date(b.date).getTime();
-            return pawB - pawA;
-          });
-          setPaws(sortedPaws)
-        } else {
-          setPaws([]);
-        }
-      });
-  };
-
-  ///////////////////////////
-  ///////Custom Fn///////////
-  ///////////////////////////
-  const formHandler = (e) => {
-    if (e.latLng) {
-      const newAnimal = Object.assign({}, animalForm);
-      newAnimal.lat = e.latLng.lat();
-      newAnimal.long = e.latLng.lng();
-      setAnimal(newAnimal)
-    }
-    else if (e && !e.target) {
-      const newImage = Object.assign({}, image);
-      newImage.name = e;
-      setImage(newImage);
-      const newAnimal = Object.assign({}, animalForm);
-      newAnimal.picture = e;
-      setAnimal(newAnimal)
-    }
-    else {
-      const name = e.target.name;
-      let value = e.target.value;
-      if (name === 'lostOrFound') {
-        if (value === 'Lost') {
-          value = true
-        } else {
-          value = false
-        }
-      }
-      if (name === 'picture') {
-        value = e.target.files[0].name;
-        setImage(e.target.files[0])
-      }
-      const animal = {...animalForm}
-
-      animal[name] = value
-      setAnimal(animal)
-    }
-  }
+  
+  
   ///////////////////////////
   /////////EXTRAS////////////
   ///////////////////////////
   const mapAlert = () => {
     if(process.env.REACT_APP_GOOGLE_MAPS_API_KEY.length > 0) alert('BE CAREFUL YOU HAVE MAPS API WORKING')
   }
-
+  
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
@@ -203,14 +158,11 @@ function App() {
     image,
     url,
     progress, // Pictures Component
-    animalForm, //PawsForm Component
     marker,
     selected, //Map Component
     paws, //Dashboard Component
     // functions
-    handleChange,
     handleUpload, //Pictures Component
-    formHandler,
     handleSubmit, //PawsForm Component
     setMarker,
     setSelected, //Map Component

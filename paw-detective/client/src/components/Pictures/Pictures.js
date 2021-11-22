@@ -2,18 +2,22 @@ import "./../../styles/Pictures.css";
 import { useContext } from "react";
 
 import globalContext from '../../services/globalContext'
+import { useDispatch } from 'react-redux';
+import { setImage } from '../../actions/index'
 
 const PicturesUpload = () => {
 
+  const dispatch = useDispatch();
+
   const {customProps} = useContext(globalContext)
-  const {url, progress, handleChange, handleUpload} = customProps;
+  const {url, progress, handleUpload} = customProps;
 
   return (
     <div>
       <div>
         <progress value={progress} max="100" />
       </div>
-      <input type="file" name="picture" onChange={(e)=>handleChange(e)} />
+      <input type="file" name="picture" onChange={(e)=>dispatch(setImage(e))} />
 
       <div>
         <img
