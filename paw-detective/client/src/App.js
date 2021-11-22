@@ -34,7 +34,7 @@ function App() {
   ////////////////////////
   ///////STATES///////////
   ////////////////////////
-  // const [image, setImage] = useState(null);
+
   const [url, setUrl] = useState("");
   const [progress, setProgress] = useState(0);
 
