@@ -1,5 +1,3 @@
-import "./../../styles/Dashboard.css";
-
 // import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router";
 import { useContext, useEffect } from "react";
@@ -25,7 +23,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   // const { user } = useAuth0();
   const modalValue = useSelector(state => state.modalSelection)
-  const modalAnimal = modalValue === "0" 
+  const modalAnimal = modalValue === "0"
     ? null
     : <PawsProfile/>
 
