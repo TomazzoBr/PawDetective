@@ -124,10 +124,12 @@ function App() {
       lat: 0,
       long: 0
     });
+    setUrl("");
     navigate("/")
   };
 
   const deletePawsHandler = async (key) => {
+    console.log(key);
     await ApiService.deletePaws(key); //key is ._id
     const newPaws = paws.filter(paw => paw._id !== paws._id)
 
@@ -166,7 +168,7 @@ function App() {
     else {
       const name = e.target.name;
       let value = e.target.value;
-      console.log(name, value)
+      // console.log(name, value)
       if (name === 'lostOrFound') {
         if (value === 'Lost') {
           value = true
