@@ -1,17 +1,25 @@
 import "./../../styles/PawsProfile.css";
 
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { closeModal } from '../../actions/index'
+
 import { FaHome } from "react-icons/fa";
 
 import globalContext from '../../services/globalContext'
 
 import Map from "../Map/Map";
 
+
+
 const PawsProfile = () => {
 
-  const {customProps} = useContext(globalContext)
-  const {selectedAnimal, changeAnimalModal, paws} = customProps;
+  const dispatch = useDispatch();
 
+  const {customProps} = useContext(globalContext)
+  const {paws} = customProps;
+
+  const selectedAnimal = useSelector(state => state.modalSelection)
   useEffect(() => {},[selectedAnimal])
 
   const animalByID = paws.filter(paw => paw._id === selectedAnimal)[0];
@@ -37,7 +45,7 @@ const PawsProfile = () => {
   };
 
   return (
-    <div className="modelAnimal" onClick={()=>{changeAnimalModal("0")}}>
+    <div className="modelAnimal" onClick={()=>{dispatch(closeModal())}}>
       <div className="container-wrap">
         <div className="profile-container">
           <p className="lost-found-title">{lostOrFound}</p>

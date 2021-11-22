@@ -48,9 +48,6 @@ function App() {
 
   const [paws, setPaws] = useState([]);
 
-  // const filter = useSelector(state => state.filterBtn);
-  // const dispatch = useDispatch();
-
   // I set is as string just cause key (id) will be an string too
   // But we should work with another key instead of ._id
   const [selectedAnimal, setSelectedAnimal] = useState("0");
@@ -72,7 +69,7 @@ function App() {
       formHandler(e)
     }
   };
-  const handleUpload = (e) => { //This one needs firebase config to upload pictures
+  const handleUpload = (e) => {
     if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
       uploadTask.on(
@@ -154,7 +151,6 @@ function App() {
   ///////Custom Fn///////////
   ///////////////////////////
   const formHandler = (e) => {
-    //We just need to work on the lat,long that come from Map.js
     if (e.latLng) {
       const newAnimal = Object.assign({}, animalForm);
       newAnimal.lat = e.latLng.lat();

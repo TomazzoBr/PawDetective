@@ -4,7 +4,7 @@ import "./../../styles/Dashboard.css";
 import { useNavigate } from "react-router";
 import { useContext, useEffect } from "react";
 
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { changeDashboardFilter } from '../../actions/index';
 
 import globalContext from "../../services/globalContext";
@@ -24,9 +24,9 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
   // const { user } = useAuth0();
-
-  const modalAnimal = selectedAnimal === "0" 
-    ? null 
+  const modalValue = useSelector(state => state.modalSelection)
+  const modalAnimal = modalValue === "0" 
+    ? null
     : <PawsProfile/>
 
   return (

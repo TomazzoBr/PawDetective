@@ -2,13 +2,17 @@ import "./../../../../styles/PawsItem.css";
 
 // import ApiService from "../../services/ApiService";
 import { useContext} from 'react'
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../../../actions/index';
 
 import globalContext from '../../../../services/globalContext'
 
 const PawsItem = ({ paw }) => {
 
+  const dispatch = useDispatch();
+
   const {customProps} = useContext(globalContext);
-  const {deletePawsHandler, changeAnimalModal} = customProps;
+  const {deletePawsHandler} = customProps;
 
   return (
     <li key={paw.picture}>
@@ -18,7 +22,7 @@ const PawsItem = ({ paw }) => {
         className="pet-picture"
         src={paw.picture}
         alt={`a ${paw.animal} pic`}
-        onClick={(e)=>{changeAnimalModal(e.target.name)}}
+        onClick={(e)=>{dispatch(openModal(e.target.name))}}
       ></img>
       <p>{paw.animal}</p>
       <div className="descr-loc-container">
