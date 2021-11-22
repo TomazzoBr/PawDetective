@@ -44,7 +44,7 @@ const postPaws = async (req:express.Request, res:express.Response) => {
 
 const deletePaws = async (req:express.Request, res:express.Response) => {
   try {
-    await Paws.deleteOne({ id: req.params.id });
+    await Paws.deleteOne({ _id: req.params.id });
     res.sendStatus(204);
   } catch (error) {
     console.log(error);
