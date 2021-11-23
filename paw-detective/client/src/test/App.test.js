@@ -18,4 +18,3 @@ describe('test of <App />', () => {
     expect(wrapper.find('test').exists()).toEqual(<p>test</p>)
    });
 });
-  

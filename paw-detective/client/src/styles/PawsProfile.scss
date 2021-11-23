@@ -1,0 +1,131 @@
+// @import './PawsProfile';
+
+.modelAnimal{
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.746);
+
+  &:hover{
+    cursor: pointer;
+  }
+
+  .container-wrap{
+    width: 90vw;
+    height: 90vh;
+
+    margin:  5vh auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    border-radius: 10px;
+
+    background-color: #e6bdb3;
+
+
+    .profile-container{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      .descr-loc-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-content: center;
+        height: 30vh;
+        width: 60vw;
+        background-color:#e25f3f;
+        border-radius: 20px;
+        margin-left: 10px;
+        position: relative;
+
+        .stamp{
+          height: 300px;
+          position: absolute;
+          bottom: -50px;
+          right: -100px;
+        }
+
+        .animal-picture{
+          height: 100%;
+          width: 28vh;
+          .pet-picture{
+            height: 28vh;
+            width: 28vh;
+            padding: 10px;
+            border: none;
+          }
+        }
+
+        .animal-data{
+          padding: 30px;
+
+          & > p{
+            padding: 10px;
+          }
+        }
+      }
+
+      .map-container{
+        padding: 20px;
+        border: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    .comment-container{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      .comment-section {
+        height: 100%;
+        width: 100%;
+        padding: 15px;
+  
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+  
+        .block{
+          height: 100%;
+          width: 100%;
+          background-color: #4591FA;
+          border-radius: 20px;
+  
+          display: flex;
+          flex-direction: column;
+          align-content: center;
+          padding-top: 20px;
+          .bubble{
+            color: #000;
+            width: 90%;
+            height: 30px;
+            margin: 10px 20px;
+            background-color: rgba(192, 192, 192, 0.555);
+            border-radius: 40px;
+            line-height: 30px;
+          }
+        }
+        .input{
+          height: 8vh;
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          margin-top: 20px;
+  
+          &:button{
+            height: 5px;
+          }
+        }
+      }
+    }
+  }
+
+}

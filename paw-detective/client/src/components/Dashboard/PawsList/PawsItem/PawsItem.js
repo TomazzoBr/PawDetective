@@ -1,5 +1,3 @@
-import "./../../../../styles/PawsItem.css";
-
 // import ApiService from "../../services/ApiService";
 import { useContext} from 'react'
 import { useDispatch } from 'react-redux';

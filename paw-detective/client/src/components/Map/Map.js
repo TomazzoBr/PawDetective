@@ -1,5 +1,3 @@
-import "../../styles/Maps.css";
-
 import { GoogleMap, InfoWindow } from "@react-google-maps/api";
 
 import { formatRelative } from "date-fns";
