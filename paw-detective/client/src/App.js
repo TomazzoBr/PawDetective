@@ -5,8 +5,8 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
 
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { savePictureUrl, resetForm } from './actions/index'
+import { useSelector, useDispatch } from "react-redux";
+import { savePictureUrl, resetForm } from "./actions/index";
 
 import ApiService from "./services/ApiService";
 import GlobalContext from "./services/globalContext";
@@ -18,11 +18,10 @@ import Header from "./components/Dashboard/Header/Header";
 // import ProtectedRoute from "./components/auth/Protected-route";
 
 function App() {
-
   const dispatch = useDispatch();
 
-  const animalForm = useSelector(state => state.form);
-  const image = useSelector(state => state.image);
+  const animalForm = useSelector((state) => state.form);
+  const image = useSelector((state) => state.image);
 
   // const {
   //   user: { email },
@@ -32,8 +31,9 @@ function App() {
   const { user, getAccessTokenSilently } = useAuth0();
 
   const navigate = useNavigate();
+
   ////////////////////////
-  ///////STATES///////////
+  /////  STATES  /////////
   ////////////////////////
 
   const [url, setUrl] = useState("");
@@ -45,16 +45,16 @@ function App() {
   const [paws, setPaws] = useState([]);
 
   ////////////////////////
-  ///////HOOKS///////////
+  //////  HOOKS  /////////
   ////////////////////////
 
   useEffect(() => {
     getAllPaws();
-    mapAlert();
+    // mapAlert();
   }, [paws]);
 
   ///////////////////////////
-  ///////FUNCTIONS///////////
+  /////  FUNCTIONS  /////////
   ///////////////////////////
 
   const handleSubmit = (e) => {
@@ -68,30 +68,29 @@ function App() {
     dispatch(resetForm());
     setUrl("");
     setProgress(0);
-    navigate("/")
+    navigate("/");
   };
 
   ///////////////////////////
-  //////////API//////////////
-  ///////FUNCTIONS///////////
+  ////////  API  ////////////
+  /////  FUNCTIONS  /////////
   ///////////////////////////
   const getAllPaws = () => {
-    ApiService.getPaws()
-    .then((paws) => {
+    ApiService.getPaws().then((paws) => {
       if (paws) {
         const sortedPaws = paws.sort((a, b) => {
           const pawA = new Date(a.date).getTime();
           const pawB = new Date(b.date).getTime();
           return pawB - pawA;
         });
-        setPaws(sortedPaws)
+        setPaws(sortedPaws);
       } else {
         setPaws([]);
       }
     });
   };
   async function postPawHandler(data) {
-    const token = "masterKey"
+    const token = "masterKey";
     // const token = await getAccessTokenSilently();
     ApiService.postPaws(data, token); //We still miss the email form somehow
   }
@@ -103,7 +102,7 @@ function App() {
   };
 
   ////////////////////////////////////////////////
-  ////////////FIREBASE PICTURE UPDATE/////////////
+  //////////  FIREBASE PICTURE UPDATE  ///////////
   ////////////////////////////////////////////////
   const handleUpload = () => {
     if (image) {
@@ -127,16 +126,15 @@ function App() {
             .getDownloadURL()
             .then((url) => {
               setUrl(url);
-              dispatch(savePictureUrl(url))
+              dispatch(savePictureUrl(url));
             });
         }
       );
     }
   };
 
-
   ///////////////////////////
-  /////////EXTRAS////////////
+  ///////  EXTRAS  //////////
   ///////////////////////////
   const mapAlert = () => {
     if(process.env.REACT_APP_GOOGLE_MAPS_API_KEY.length > 0) alert('BE CAREFUL YOU HAVE MAPS API WORKING')
@@ -149,23 +147,23 @@ function App() {
   if (!isLoaded) return "Loading Maps";
 
   ////////////////////////////
-  /////////CONTEXT////////////
+  ///////  CONTEXT  //////////
   ///////////////////////////
   //This is gonna be a massive object and component (Whoever wants to implement redux or modularize functions, here's your time to shine)
   const customProps = {
     // states
-    image,
     url,
     progress, // Pictures Component
     marker,
     selected, //Map Component
     paws, //Dashboard Component
+
     // functions
     handleUpload, //Pictures Component
     handleSubmit, //PawsForm Component
     setMarker,
     setSelected, //Map Component
-    deletePawsHandler
+    deletePawsHandler,
   };
 
   return (
@@ -173,11 +171,11 @@ function App() {
       <div className="App">
       <Header />
         <Routes>
-          <Route path="/" element={<Dashboard/>} />
+          <Route path="/" element={<Dashboard />} />
 
           {/* <Route exact path="/profile/:id" element={<PawsProfile/>} key={document.location.href} /> */}
 
-          <Route exact path="/form" element={<PawsForm/>} />
+          <Route exact path="/form" element={<PawsForm />} />
 
           {/* <ProtectedRoute exact path="/form" component={PawsForm} /> */}
         </Routes>

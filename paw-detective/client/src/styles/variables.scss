@@ -47,4 +47,11 @@ $border-radius: 5px;
 
 @mixin dropdown {
   background-color: $bg-dark;
+  color: $light;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: $border-radius;
 }
