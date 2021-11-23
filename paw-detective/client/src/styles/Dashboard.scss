@@ -33,14 +33,7 @@
       margin: 15px 10px;
 
       select, select:active, option {
-        background-color: $bg-dark;
-        color: $light;
-        border: none;
-        outline: none;
-        font-size: 20px;
-        font-family: inherit;
-        cursor: pointer;
-        border-radius: $border-radius;
+        @include dropdown
       }
     }
   }
