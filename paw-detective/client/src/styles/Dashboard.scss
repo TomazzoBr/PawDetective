@@ -1,3 +1,16 @@
 .dashboard {
+  display: flex;
 
+  .dash-child {
+    width: 50%;
+    height: 100%;
+
+    button {
+      @include btn;
+    }
+  }
+
+  #left-dash-child {
+    text-align:center;
+  }
 }

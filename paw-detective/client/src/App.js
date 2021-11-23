@@ -14,6 +14,7 @@ import { storage } from "./services/firebaseConfig";
 
 import Dashboard from "./components/Dashboard/Dashboard";
 import PawsForm from "./components/PawsForm/PawsForm";
+import Header from "./components/Dashboard/Header/Header";
 // import ProtectedRoute from "./components/auth/Protected-route";
 
 function App() {
@@ -170,7 +171,7 @@ function App() {
   return (
     <GlobalContext.Provider value={{ customProps }}>
       <div className="App">
-       {/* <p>test</p> */}
+      <Header />
         <Routes>
           <Route path="/" element={<Dashboard/>} />
 
