@@ -1,9 +1,11 @@
 .map-container {
-  border: 2px solid #bc4639;
   border-radius: 7px;
-}
-.compass-button {
   display: flex;
-  position: absolute;
-  z-index: 1;
+  justify-content: center;
+
+  & > div:first-child {
+    width: 700px !important;
+    height: 700px !important;
+  }
 }
+

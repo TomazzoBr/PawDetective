@@ -30,10 +30,9 @@ const PawsList = () => {
   }
 
   return (
-    <ul className="list-container">
-      <h4 className="click-add-h4">Click a pet to see more details</h4>
+    <div className="list-container">
       {renderPaws(paws)}
-    </ul>
+    </div>
   );
 };
 

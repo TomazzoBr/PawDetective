@@ -86,7 +86,7 @@ const Map = ({profileMarker}) => {
 
   return (
     <div className="map-container">
-      <Locate panTo={panTo} />
+      {/* <Locate panTo={panTo} /> */}
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}

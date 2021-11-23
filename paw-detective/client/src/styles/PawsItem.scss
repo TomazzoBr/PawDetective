@@ -1,3 +1,28 @@
-.list-container li {
+.paw-item {
   background-color: $bg-dark;
+  width: 220px;
+  height: 200px;
+  padding: 10px 10px;
+  border-radius: $border-radius;
+  transition: 0.2s ease-in;
+  text-align: center;
+
+  &:hover {
+    transform: scale(1.02)
+  }
+
+  .pet-picture {
+    margin: 0 auto;
+    width: 200px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $border-radius;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+  }
 }

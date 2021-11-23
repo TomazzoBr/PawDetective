@@ -1,1 +1,12 @@
-
+.list-container {
+  display: flex;
+  flex-wrap:wrap;
+  align-content: flex-start;
+  gap: 20px;
+  padding: 10px 10px;
+  border: 1px solid red;
+  // vertical scrolling
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 80vh;
+}

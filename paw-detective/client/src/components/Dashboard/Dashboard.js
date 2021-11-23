@@ -42,9 +42,6 @@ const Dashboard = () => {
       </div>
       <div className="dash-child" id="right-dash-child">
         <div className="dashboard-list-container">
-          <div>
-            <h4 style={{ color: "blue" }}>Find your pet</h4>
-          </div>
           <label>Lost or Found?</label>
             <div className="lost-found-bar">
               <select
@@ -56,7 +53,7 @@ const Dashboard = () => {
                 <option value="Found">Found</option>
               </select>
             </div>
-
+          <h4 className="click-add-h4">Click a pet to see more details</h4>
           <PawsList />
         </div>
       </div>
