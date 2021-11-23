@@ -17,14 +17,13 @@ const PawsItem = ({ paw }) => {
       {/* <p className="lost-found-title">{paw.lostOrFound}</p> */}
       <div
         style={{ backgroundImage: `url(${paw.picture})` }}
-        name={paw._id}
         className="pet-picture"
       ></div>
       <div className="descr-loc-container">
         <p>Location: <span>{paw.location}</span></p>
       </div>
       <div>
-        <button onClick={(e)=>{dispatch(openModal(e.target.name))}} >See more</button>
+        <button name={paw._id} onClick={(e)=>{dispatch(openModal(e.target.name))}} >See more</button>
       </div>
       {/* <div className="topic_delete">
         {

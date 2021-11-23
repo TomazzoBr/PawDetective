@@ -16,24 +16,24 @@ const PicturesUpload = () => {
       <div>
         <progress value={progress} max="100" />
       </div>
-      <input
-        type="file"
-        name="picture"
-        className="picture-input"
-        onChange={(e) => dispatch(setImage(e))}
-      />
-
+      <div id="fb-picture">
+        <input
+          type="file"
+          name="picture"
+          onChange={(e) => dispatch(setImage(e))}
+        />
+      </div>
       <div>
         <img
           className="pet-picture"
-          src={url || "http://via.placeholder.com/200x200"}
+          src={url || "https://www.turnkeytec.com/wp-content/uploads/2020/07/placeholder-image-400x300.jpg"}
           alt="firebase-pic"
         />
       </div>
 
-      <div className="pictures-button" onClick={() => handleUpload()}>
+      <button className="pictures-button" onClick={() => handleUpload()}>
         Upload Picture
-      </div>
+      </button>
     </div>
   );
 };

@@ -2,10 +2,11 @@
   border-radius: 7px;
   display: flex;
   justify-content: center;
+}
 
-  & > div:first-child {
+#left-dash-child {
+  .map-container > div:first-child {
     width: 700px !important;
     height: 700px !important;
   }
 }
-

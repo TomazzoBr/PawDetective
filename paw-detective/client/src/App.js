@@ -1,5 +1,3 @@
-import "./styles/App.css";
-
 import { useAuth0 } from "@auth0/auth0-react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
@@ -169,7 +167,7 @@ function App() {
   return (
     <GlobalContext.Provider value={{ customProps }}>
       <div className="App">
-      <Header />
+        <Header />
         <Routes>
           <Route path="/" element={<Dashboard />} />
 

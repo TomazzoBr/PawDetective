@@ -6,9 +6,10 @@ $Font: 'Arial', sans-serif;
 $dark: #000000;
 $light: #ffffff;
 $bg: #F0DFD6;
-$bg-dark: #9B6D4F;
-$action: #00d8bb;
+$bg-dark: #FF846C;
+$action: #7FD1AE;
 $active: #005247;
+$bg-secondary: #f3c6ae;
 
 // border-radius
 
@@ -47,7 +48,7 @@ $border-radius: 5px;
 
 @mixin dropdown {
   background-color: $bg-dark;
-  color: $light;
+  color: $dark;
   border: none;
   outline: none;
   font-size: 20px;

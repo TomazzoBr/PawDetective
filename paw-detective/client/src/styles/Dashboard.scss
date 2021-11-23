@@ -25,15 +25,18 @@
     }
 
     .dashboard-list-container label {
-      margin: 0px 20px;
+      margin: 15px 20px;
       font-size: 25px;
+      font-weight: 600;
     }
 
     .lost-found-bar {
-      margin: 15px 10px;
+      margin: 10px 15px;
 
       select, select:active, option {
-        @include dropdown
+        @include dropdown;
+        height: 40px;
+        padding-left: 10px;
       }
     }
   }

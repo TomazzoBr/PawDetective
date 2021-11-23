@@ -1,6 +1,3 @@
-import "./../../styles/PawsForm.scss";
-import { FaHome } from "react-icons/fa";
-
 import { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -11,7 +8,6 @@ import {
 } from "../../actions/index";
 
 // import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
 import Map from "../Map/Map";
 import PicturesUpload from "../Pictures/Pictures";
 
@@ -28,14 +24,6 @@ const PawsForm = () => {
 
   return (
     <div>
-      <header className="form-header">
-        <h1 className="title-header"> LOST or FOUND PAWS </h1>
-        <div className="login-logo">
-          <Link to="/">
-            <FaHome size={30} />
-          </Link>
-        </div>
-      </header>
       <div className="form-page-container">
         <div className="map-container">
           <div className="map">
