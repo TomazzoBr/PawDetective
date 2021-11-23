@@ -37,6 +37,15 @@ const PawsProfile = () => {
     time: new Date(date),
   };
 
+  const preventModalClosing = (e) => {
+    if (e.target.className === 'modelAnimal') dispatch(closeModal())
+    return
+  }
+
+  const stamp = lostOrFound 
+    ? 'https://www.lostitfoundit.in/images/loststamp.png' 
+    : 'https://www.lostitfoundit.in/images/foundstamp.png'
+
   const mockComments = [
     'Its dead already just give up',
     'Yesterday I saw it',
@@ -48,7 +57,7 @@ const PawsProfile = () => {
   const comments = mockComments.map(comment => <div className="bubble"><p>{comment}</p></div>);
 
   return (
-    <div className="modelAnimal" onClick={()=>{dispatch(closeModal())}}>
+    <div className="modelAnimal" onClick={(e)=>{preventModalClosing(e)}}>
       <div className="container-wrap">
         <div className="profile-container">
           
@@ -58,29 +67,34 @@ const PawsProfile = () => {
             </div>
             {/* <p className="lost-found-title">{lostOrFound}</p> */}
             <div className="animal-data">
-              <h5>Description:</h5>
+              <h3>Description:</h3>
               <p>{description}</p>
-              <h5>Location:</h5>
+              <h3>Location:</h3>
               <p>{address}</p>
             </div>
+            <img className="stamp" src={stamp} alt={`a ${animal}`}></img>
           </div>
 
-          <Map profileMarker={{ profileMarker }} />
+          <div className="map-container">
+            <Map profileMarker={{ profileMarker }} />
+          </div>
         </div>
 
-        <div className="comment-section">
-          <h3>Comments</h3>
-          <div className="block">
-            <p>{comments}</p>
-          </div>
-          <div className="input">
-            <input
-                name="comment"
-                type="text"
-                placeholder="Write your comment..."
-                value=""
-              />
-            <button className="pic-button">Send</button>
+        <div className="comment-container">
+          <div className="comment-section">
+            <h3>Comments</h3>
+            <div className="block">
+              <p>{comments}</p>
+            </div>
+            <div className="input">
+              <input
+                  name="comment"
+                  type="text"
+                  placeholder="Write your comment..."
+                  value=""
+                />
+              <button className="pic-button">Send</button>
+            </div>
           </div>
         </div>
       </div>

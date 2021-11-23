@@ -93,10 +93,10 @@ const Map = ({profileMarker}) => {
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={8}
-        center={
-          profileMarker
-            ? { lat: profileMarker.profileMarker.lat, lng: profileMarker.profileMarker.long }
-            : center
+        center={center
+          // profileMarker
+          //   ? { lat: profileMarker.profileMarker.lat, lng: profileMarker.profileMarker.long }
+          //   : center
         }
         onClick={(e) => onMapClick(e)}
         onLoad={(map) => onMapLoad(map)}
