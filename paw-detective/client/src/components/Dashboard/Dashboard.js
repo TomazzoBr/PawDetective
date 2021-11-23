@@ -53,7 +53,6 @@ const Dashboard = () => {
                 <option value="Found">Found</option>
               </select>
             </div>
-          <h4 className="click-add-h4">Click a pet to see more details</h4>
           <PawsList />
         </div>
       </div>

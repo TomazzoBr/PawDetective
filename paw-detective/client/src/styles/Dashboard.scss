@@ -23,5 +23,25 @@
     .lost-found-scroll {
       width: 200px;
     }
+
+    .dashboard-list-container label {
+      margin: 0px 20px;
+      font-size: 25px;
+    }
+
+    .lost-found-bar {
+      margin: 15px 10px;
+
+      select, select:active, option {
+        background-color: $bg-dark;
+        color: $light;
+        border: none;
+        outline: none;
+        font-size: 20px;
+        font-family: inherit;
+        cursor: pointer;
+        border-radius: $border-radius;
+      }
+    }
   }
 }

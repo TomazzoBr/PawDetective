@@ -19,13 +19,12 @@ const PawsItem = ({ paw }) => {
         style={{ backgroundImage: `url(${paw.picture})` }}
         name={paw._id}
         className="pet-picture"
-        onClick={(e)=>{dispatch(openModal(e.target.name))}}
       ></div>
       <div className="descr-loc-container">
-        <p>{paw.location}</p>
+        <p>Location: <span>{paw.location}</span></p>
       </div>
-      <div className="descr-loc-container">
-        <p>{paw.animal}</p>
+      <div>
+        <button onClick={(e)=>{dispatch(openModal(e.target.name))}} >See more</button>
       </div>
       {/* <div className="topic_delete">
         {

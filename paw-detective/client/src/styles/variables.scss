@@ -7,7 +7,7 @@ $dark: #000000;
 $light: #ffffff;
 $bg: #F0DFD6;
 $bg-dark: #9B6D4F;
-$action: #ffe54c;
+$action: #00d8bb;
 $active: #005247;
 
 // border-radius
@@ -28,7 +28,7 @@ $border-radius: 5px;
   cursor: pointer;
   position: relative;
   background-color: rgba(0, 0, 0, 0);
-  &::after {
+  &:after {
     content: "";
     background-color: $action;
     width: 100%;
@@ -39,8 +39,12 @@ $border-radius: 5px;
     left: 7px;
     transition: 0.2s;
   }
-  &:hover::after {
+  &:hover:after {
     top: 0px;
     left: 0px;
   }
+}
+
+@mixin dropdown {
+  background-color: $bg-dark;
 }

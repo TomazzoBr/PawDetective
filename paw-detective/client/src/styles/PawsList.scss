@@ -4,7 +4,8 @@
   align-content: flex-start;
   gap: 20px;
   padding: 10px 10px;
-  border: 1px solid red;
+  margin: 15px 15px;
+  background-color: $bg-dark;
   // vertical scrolling
   overflow-y: scroll;
   overflow-x: hidden;
