@@ -6,21 +6,18 @@ import { formatRelative } from "date-fns";
 import { FaLocationArrow } from "react-icons/fa";
 
 import { useCallback, useRef, useContext } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
-import { mapFormCords } from '../../actions/index'
+import { mapFormCords } from "../../actions/index";
 
 import MapMarker from "./MapMarker";
-import globalContext from '../../services/globalContext'
+import globalContext from "../../services/globalContext";
 
-const Map = ({profileMarker}) => {
-
+const Map = ({ profileMarker }) => {
   const dispatch = useDispatch();
 
-  const {customProps} = useContext(globalContext);
-  const {paws, marker, selected,
-    setMarker, setSelected,
-  } = customProps;
+  const { customProps } = useContext(globalContext);
+  const { paws, marker, selected, setMarker, setSelected } = customProps;
 
   const mapRef = useRef();
 
@@ -46,14 +43,14 @@ const Map = ({profileMarker}) => {
       time: new Date(),
     }));
     dispatch(mapFormCords(e));
-  }
+  };
   const onMapLoad = (map) => {
     mapRef.current = map;
-  }
+  };
 
   const panTo = useCallback(({ lat, lng }) => {
-      mapRef.current.panTo({ lat, lng });
-      mapRef.current.setZoom(14);
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(14);
   }, []);
 
   const mapContainerStyle = {
@@ -85,7 +82,7 @@ const Map = ({profileMarker}) => {
       </button>
     );
   };
-  
+
   return (
     <div className="map-container">
       <Locate panTo={panTo} />
@@ -95,7 +92,10 @@ const Map = ({profileMarker}) => {
         zoom={8}
         center={
           profileMarker
-            ? { lat: profileMarker.profileMarker.lat, lng: profileMarker.profileMarker.long }
+            ? {
+                lat: profileMarker.profileMarker.lat,
+                lng: profileMarker.profileMarker.lng,
+              }
             : center
         }
         onClick={(e) => onMapClick(e)}
@@ -103,31 +103,30 @@ const Map = ({profileMarker}) => {
       >
         {markersArray}
 
-        {!paws && !profileMarker && marker
-          ? (<MapMarker marker={marker} setSelected={setSelected} />)
-          : null}
+        {!paws && !profileMarker && marker ? (
+          <MapMarker marker={marker} setSelected={setSelected} />
+        ) : null}
 
-        {profileMarker
-          ? (<MapMarker marker={profileMarker.profileMarker} setSelected={setSelected} />)
-          : null}
+        {profileMarker ? (
+          <MapMarker
+            marker={profileMarker.profileMarker}
+            setSelected={setSelected}
+          />
+        ) : null}
 
-
-        {selected
-          ? (<InfoWindow
-              position={{ lat: selected.lat, lng: selected.lng }}
-              onCloseClick={() => {
-                setSelected(null);
-              }}
-            >
+        {selected ? (
+          <InfoWindow
+            position={{ lat: selected.lat, lng: selected.lng }}
+            onCloseClick={() => {
+              setSelected(null);
+            }}
+          >
             <div>
               <h2>Lost Paws!</h2>
-              <p>
-                Time: {formatRelative(selected.time, new Date())}
-              </p>
+              <p>Time: {formatRelative(selected.time, new Date())}</p>
             </div>
-          </InfoWindow>)
-          : null}
-
+          </InfoWindow>
+        ) : null}
       </GoogleMap>
     </div>
   );

@@ -1,24 +1,23 @@
 import "./../../styles/PawsProfile.css";
 
-import { useContext, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { closeModal } from '../../actions/index'
+import { useContext, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { closeModal } from "../../actions/index";
 
-import globalContext from '../../services/globalContext'
+import globalContext from "../../services/globalContext";
 
 import Map from "../Map/Map";
 
 const PawsProfile = () => {
-
   const dispatch = useDispatch();
 
-  const {customProps} = useContext(globalContext)
-  const {paws} = customProps;
+  const { customProps } = useContext(globalContext);
+  const { paws } = customProps;
 
-  const selectedAnimal = useSelector(state => state.modalSelection)
-  useEffect(() => {},[selectedAnimal])
+  const selectedAnimal = useSelector((state) => state.modalSelection);
+  useEffect(() => {}, [selectedAnimal]);
 
-  const animalByID = paws.filter(paw => paw._id === selectedAnimal)[0];
+  const animalByID = paws.filter((paw) => paw._id === selectedAnimal)[0];
 
   const {
     lostOrFound,
@@ -29,19 +28,21 @@ const PawsProfile = () => {
     lat,
     long,
     date,
-  } = animalByID
-  console.log(animalByID);
-  // const lostOrFound="Lost";
-  // const address="Home";
+  } = animalByID;
 
   const profileMarker = {
     lat,
-    long,
+    lng: long,
     time: new Date(date),
   };
 
   return (
-    <div className="modelAnimal" onClick={()=>{dispatch(closeModal())}}>
+    <div
+      className="modelAnimal"
+      onClick={() => {
+        dispatch(closeModal());
+      }}
+    >
       <div className="container-wrap">
         <div className="profile-container">
           <p className="lost-found-title">{lostOrFound}</p>

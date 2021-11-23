@@ -1,0 +1,27 @@
+.pictures-container {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+
+  .picture-input {
+    margin: 10px;
+    width: 65% !important;
+  }
+}
+
+.pet-picture {
+  width: 200px;
+  height: 150px;
+}
+
+.pictures-button {
+  border: 1px solid #bc4639;
+  border-radius: 5px;
+  box-sizing: border-box;
+  width: 15vw;
+  background-color: #4285f4;
+  color: #f3e0dc;
+  font-weight: bold;
+  margin-top: 10px;
+}

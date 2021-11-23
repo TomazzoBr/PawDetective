@@ -1,9 +1,21 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
 import App from '../App';
-// import mount
+import Enzyme, {mount} from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { Provider }from 'react-redux';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/test/i);
-  expect(linkElement).toBeInTheDocument();
+// const UserContext = React.createContext();
+
+Enzyme.configure({ adapter: new Adapter() });
+
+describe('test of <App />', () => {
+  it('should display test text properly', () => {
+    const wrapper = mount(
+      <Provider >
+        <App />
+      </Provider>
+  );
+    expect(wrapper.find('test').exists()).toEqual(<p>test</p>)
+   });
 });
+  

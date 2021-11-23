@@ -5,8 +5,8 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
 
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { savePictureUrl, resetForm } from './actions/index'
+import { useSelector, useDispatch } from "react-redux";
+import { savePictureUrl, resetForm } from "./actions/index";
 
 import ApiService from "./services/ApiService";
 import GlobalContext from "./services/globalContext";
@@ -17,11 +17,10 @@ import PawsForm from "./components/PawsForm/PawsForm";
 // import ProtectedRoute from "./components/auth/Protected-route";
 
 function App() {
-
   const dispatch = useDispatch();
 
-  const animalForm = useSelector(state => state.form);
-  const image = useSelector(state => state.image);
+  const animalForm = useSelector((state) => state.form);
+  const image = useSelector((state) => state.image);
 
   // const {
   //   user: { email },
@@ -49,17 +48,21 @@ function App() {
 
   useEffect(() => {
     getAllPaws();
-    mapAlert();
+    // mapAlert();
   }, [paws]);
 
   ///////////////////////////
   ///////FUNCTIONS///////////
   ///////////////////////////
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (!animalForm.description && !animalForm.picture && !animalForm.location) {
+
+    if (
+      !animalForm.description &&
+      !animalForm.picture &&
+      !animalForm.location
+    ) {
       alert("please fill in all the fields");
       return;
     }
@@ -67,39 +70,36 @@ function App() {
     dispatch(resetForm());
     setUrl("");
     setProgress(0);
-    navigate("/")
+    navigate("/");
   };
-  
-  
-  
+
   ///////////////////////////
   //////////API//////////////
   ///////FUNCTIONS///////////
   ///////////////////////////
   const getAllPaws = () => {
-    ApiService.getPaws()
-    .then((paws) => {
+    ApiService.getPaws().then((paws) => {
       if (paws) {
         const sortedPaws = paws.sort((a, b) => {
           const pawA = new Date(a.date).getTime();
           const pawB = new Date(b.date).getTime();
           return pawB - pawA;
         });
-        setPaws(sortedPaws)
+        setPaws(sortedPaws);
       } else {
         setPaws([]);
       }
     });
   };
   async function postPawHandler(data) {
-    const token = "masterKey"
+    const token = "masterKey";
     // const token = await getAccessTokenSilently();
     ApiService.postPaws(data, token); //We still miss the email form somehow
   }
   const deletePawsHandler = async (key) => {
     await ApiService.deletePaws(key); //key is ._id
-    const newPaws = paws.filter(paw => paw._id !== paws._id)
-    
+    const newPaws = paws.filter((paw) => paw._id !== paws._id);
+
     setPaws(newPaws);
   };
 
@@ -128,21 +128,21 @@ function App() {
             .getDownloadURL()
             .then((url) => {
               setUrl(url);
-              dispatch(savePictureUrl(url))
+              dispatch(savePictureUrl(url));
             });
         }
       );
     }
   };
-  
-  
+
   ///////////////////////////
   /////////EXTRAS////////////
   ///////////////////////////
   const mapAlert = () => {
-    if(process.env.REACT_APP_GOOGLE_MAPS_API_KEY.length > 0) alert('BE CAREFUL YOU HAVE MAPS API WORKING')
-  }
-  
+    if (process.env.REACT_APP_GOOGLE_MAPS_API_KEY.length > 0)
+      alert("BE CAREFUL YOU HAVE MAPS API WORKING");
+  };
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
@@ -166,19 +166,19 @@ function App() {
     handleSubmit, //PawsForm Component
     setMarker,
     setSelected, //Map Component
-    deletePawsHandler
+    deletePawsHandler,
   };
 
   return (
     <GlobalContext.Provider value={{ customProps }}>
       <div className="App">
-       {/* <p>test</p> */}
+        {/*<p>test</p>*/}
         <Routes>
-          <Route path="/" element={<Dashboard/>} />
+          <Route path="/" element={<Dashboard />} />
 
           {/* <Route exact path="/profile/:id" element={<PawsProfile/>} key={document.location.href} /> */}
 
-          <Route exact path="/form" element={<PawsForm/>} />
+          <Route exact path="/form" element={<PawsForm />} />
 
           {/* <ProtectedRoute exact path="/form" component={PawsForm} /> */}
         </Routes>
