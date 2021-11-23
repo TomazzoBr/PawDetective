@@ -1,4 +1,3 @@
-import "./../../styles/Pictures.css";
 import { useContext } from "react";
 
 import globalContext from '../../services/globalContext'
@@ -26,7 +25,7 @@ const PicturesUpload = () => {
           alt="firebase-pic"
         />
       </div>
-      
+
       <div className="pictures-button" onClick={()=>handleUpload()}>
         Upload Picture
       </div>

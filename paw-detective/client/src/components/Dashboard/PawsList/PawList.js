@@ -1,5 +1,3 @@
-import "./../../../styles/PawsList.css";
-
 import PawsItem from "./PawsItem/PawsItem";
 import { useContext } from "react";
 

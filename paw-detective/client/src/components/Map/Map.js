@@ -1,5 +1,3 @@
-import "../../styles/Maps.css";
-
 import { GoogleMap, InfoWindow } from "@react-google-maps/api";
 
 import { formatRelative } from "date-fns";
@@ -85,7 +83,7 @@ const Map = ({profileMarker}) => {
       </button>
     );
   };
-  
+
   return (
     <div className="map-container">
       <Locate panTo={panTo} />
