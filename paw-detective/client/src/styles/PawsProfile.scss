@@ -58,6 +58,15 @@
           right: -100px;
         }
 
+        .delete_btn {
+          position: absolute;
+          top: 15px;
+          right: 20px;
+          border: none;
+          background-color: transparent;
+          font-size: 25px;
+        }
+
         .animal-picture {
           height: 100%;
           width: 28vh;

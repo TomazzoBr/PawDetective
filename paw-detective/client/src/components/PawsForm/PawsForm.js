@@ -37,17 +37,38 @@ const PawsForm = () => {
             {/* choose if you lost a pet or found a lost one */}
             <div className="form-control">
               <div className="left-form">
-                <label>Lost or Found?</label>
-                <select
-                  name="lostOrFound"
-                  value={lostOrFound ? "Lost" : "Found"}
-                  onChange={(e) => {
-                    dispatch(toggleIsLost(e.target.value));
-                  }}
-                >
-                  <option value="Lost">Lost</option>
-                  <option value="Found">Found</option>
-                </select>
+                <div className="dropies">
+                  <div>
+                    <label>Lost or Found?</label>
+                    <select
+                      name="lostOrFound"
+                      value={lostOrFound ? "Lost" : "Found"}
+                      onChange={(e) => {
+                        dispatch(toggleIsLost(e.target.value));
+                      }}
+                    >
+                      <option value="Lost">Lost</option>
+                      <option value="Found">Found</option>
+                    </select>
+                  </div>
+                  <div>
+                    {/* choose what kind of animal it is */}
+                    <label>Animal</label>
+                    <select
+                      name="animal"
+                      value={animal}
+                      onChange={(e) => {
+                        dispatch(changeAnimalForm(e.target.value));
+                      }}
+                    >
+                      <option value="Dog">Dog</option>
+                      <option value="Cat">Cat</option>
+                      <option value="Bunny">Bunny</option>
+                      <option value="Bird">Bird</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
                 {/* add user name */}
                 <div className="left-form-input">
                   <label>Your name</label>
@@ -56,23 +77,6 @@ const PawsForm = () => {
                     type="text"
                     placeholder=" Insert your name here"
                   ></input>
-                </div>
-                <div>
-                  {/* choose what kind of animal it is */}
-                  <label>Animal</label>
-                  <select
-                    name="animal"
-                    value={animal}
-                    onChange={(e) => {
-                      dispatch(changeAnimalForm(e.target.value));
-                    }}
-                  >
-                    <option value="Dog">Dog</option>
-                    <option value="Cat">Cat</option>
-                    <option value="Bunny">Bunny</option>
-                    <option value="Bird">Bird</option>
-                    <option value="Other">Other</option>
-                  </select>
                 </div>
                 {/* add a description of the animal and any other details */}
                 <div className="left-form-input">

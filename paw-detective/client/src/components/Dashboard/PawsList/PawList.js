@@ -13,7 +13,7 @@ const PawsList = () => {
 
   const renderPaws = (paws) => {
     if (paws.length < 1) {
-      return <p>there're no pets in this list😉</p>;
+      return <p>There are no pets in this list 😉</p>;
     } else {
       return paws
         .filter((paw) => {

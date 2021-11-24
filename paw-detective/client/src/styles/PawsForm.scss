@@ -86,8 +86,17 @@
         align-items: center;
         width: 40%;
 
+        .dropies {
+          display: flex;
+          justify-content: space-around;
+          width: 100%;
+        }
         .lost-or-found {
           width: 20%;
+        }
+
+        label {
+          margin-bottom: 10px;
         }
       }
 
