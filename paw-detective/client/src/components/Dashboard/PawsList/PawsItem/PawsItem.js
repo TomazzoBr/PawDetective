@@ -1,49 +1,31 @@
-// import ApiService from "../../services/ApiService";
-import { useContext} from 'react'
-import { useDispatch } from 'react-redux';
-import { openModal } from '../../../../actions/index';
-
-import globalContext from '../../../../services/globalContext'
+import { useDispatch } from "react-redux";
+import { openModal } from "../../../../actions/index";
 
 const PawsItem = ({ paw }) => {
-
   const dispatch = useDispatch();
 
-  const {customProps} = useContext(globalContext);
-  const {deletePawsHandler} = customProps;
-
   return (
-    <div key={paw.picture} class="paw-item">
+    <div key={paw.picture} className="paw-item">
       {/* <p className="lost-found-title">{paw.lostOrFound}</p> */}
       <div
         style={{ backgroundImage: `url(${paw.picture})` }}
         className="pet-picture"
       ></div>
       <div className="descr-loc-container">
-        <p>Location: <span>{paw.location}</span></p>
+        <p>
+          Location: <span>{paw.location}</span>
+        </p>
       </div>
       <div>
-        <button name={paw._id} onClick={(e)=>{dispatch(openModal(e.target.name))}} >See more</button>
+        <button
+          name={paw._id}
+          onClick={(e) => {
+            dispatch(openModal(e.target.name));
+          }}
+        >
+          See more
+        </button>
       </div>
-      {/* <div className="topic_delete">
-        {
-          <button
-            className="delete_btn"
-            onClick={() => {
-              if (window.confirm("Are you sure you wish to delete this item?"))
-                deletePawsHandler(paw._id);
-            }}
-          >
-            <span
-              role="img"
-              aria-label="delete-button"
-              className="delete-button"
-            >
-              ❌
-            </span>
-          </button>
-        }
-      </div> */}
     </div>
   );
 };

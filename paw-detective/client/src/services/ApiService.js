@@ -11,7 +11,7 @@ async function getPaws() {
 
 async function postPaws(data, token) {
   // We dont send the email yet
-
+  console.log(data);
   try {
     const newPaws = await fetch(`${BASE_URL}/paws`, {
       method: "POST",

@@ -1,6 +1,6 @@
 .list-container {
   display: flex;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   align-content: flex-start;
   gap: 20px;
   padding: 15px 15px;
@@ -9,5 +9,5 @@
   // vertical scrolling
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 80vh;
+  height: 70vh;
 }

@@ -22,7 +22,7 @@ const postPaws = async (req:express.Request, res:express.Response) => {
       location,
       lat,
       long,
-      // email,
+      email,
     } = req.body;
 
     const paws = await Paws.create({
@@ -33,7 +33,7 @@ const postPaws = async (req:express.Request, res:express.Response) => {
       location,
       lat,
       long,
-      // email,
+      email,
     });
     res.status(201).send(paws);
   } catch (error) {

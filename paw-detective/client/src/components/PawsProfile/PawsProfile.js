@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useContext, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../../actions/index";
@@ -10,7 +11,10 @@ const PawsProfile = () => {
   const dispatch = useDispatch();
 
   const { customProps } = useContext(globalContext);
-  const { paws } = customProps;
+  const { paws, deletePawsHandler } = customProps;
+
+  const { user } = useAuth0();
+  const userEmail = user.email;
 
   const selectedAnimal = useSelector((state) => state.modalSelection);
   useEffect(() => {}, [selectedAnimal]);
@@ -26,6 +30,7 @@ const PawsProfile = () => {
     lat,
     long,
     date,
+    email,
   } = animalByID;
 
   const profileMarker = {
@@ -35,32 +40,75 @@ const PawsProfile = () => {
   };
 
   const preventModalClosing = (e) => {
-    if (e.target.className === 'modelAnimal') dispatch(closeModal())
-    return
-  }
+    if (e.target.className === "modelAnimal") dispatch(closeModal());
+    return;
+  };
 
   const stamp = lostOrFound
-    ? 'https://www.lostitfoundit.in/images/loststamp.png'
-    : 'https://www.lostitfoundit.in/images/foundstamp.png'
+    ? "https://www.lostitfoundit.in/images/loststamp.png"
+    : "https://www.lostitfoundit.in/images/foundstamp.png";
 
   const mockComments = [
-    'Its dead already just give up',
-    'Yesterday I saw it',
-    'I just have it, now is my catto',
-    'Okay Im tired of it, I can sell it for 5€',
-    'I give you 2!!',
-    'No thanks I like bananas'
-  ]
-  const comments = mockComments.map(comment => <div className="bubble"><p>{comment}</p></div>);
+    "Its dead already just give up",
+    "Yesterday I saw it",
+    "I just have it, now is my catto",
+    "Okay Im tired of it, I can sell it for 5€",
+    "I give you 2!!",
+    "No thanks I like bananas",
+  ];
+  const comments = mockComments.map((comment, index) => (
+    <div className="bubble" key={index}>
+      <p>{comment}</p>
+    </div>
+  ));
+
+  const deleteBtn = () => {
+    if (user) {
+      if (email === userEmail) {
+        return (
+          <div className="topic_delete">
+            {
+              <button
+                className="delete_btn"
+                onClick={() => {
+                  if (
+                    window.confirm("Are you sure you wish to delete this item?")
+                  )
+                    deletePawsHandler(selectedAnimal);
+                }}
+              >
+                <span
+                  role="img"
+                  aria-label="delete-button"
+                  className="delete-button"
+                >
+                  ❌
+                </span>
+              </button>
+            }
+          </div>
+        );
+      }
+    }
+    return null;
+  };
 
   return (
-    <div className="modelAnimal" onClick={(e)=>{preventModalClosing(e)}}>
+    <div
+      className="modelAnimal"
+      onClick={(e) => {
+        preventModalClosing(e);
+      }}
+    >
       <div className="container-wrap">
         <div className="profile-container">
-
           <div className="descr-loc-container">
             <div className="animal-picture">
-              <img className="pet-picture" src={picture} alt={`a ${animal}`}></img>
+              <img
+                className="pet-picture"
+                src={picture}
+                alt={`a ${animal}`}
+              ></img>
             </div>
             {/* <p className="lost-found-title">{lostOrFound}</p> */}
             <div className="animal-data">
@@ -70,6 +118,7 @@ const PawsProfile = () => {
               <p>{location}</p>
             </div>
             <img className="stamp" src={stamp} alt={`a ${animal}`}></img>
+            {deleteBtn()}
           </div>
 
           <div className="map-container">
@@ -79,15 +128,13 @@ const PawsProfile = () => {
 
         <div className="comment-container">
           <div className="comment-section">
-            <div className="block">
-              <p>{comments}</p>
-            </div>
+            <div className="block">{comments}</div>
             <div className="input">
               <input
-                  name="comment"
-                  type="text"
-                  placeholder="Write your comment..."
-                />
+                name="comment"
+                type="text"
+                placeholder="Write your comment..."
+              />
               <button className="pic-button">Send</button>
             </div>
           </div>

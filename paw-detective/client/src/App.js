@@ -4,7 +4,7 @@ import { useLoadScript } from "@react-google-maps/api";
 
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { savePictureUrl, resetForm } from "./actions/index";
+import { savePictureUrl, resetForm, closeModal } from "./actions/index";
 
 import ApiService from "./services/ApiService";
 import GlobalContext from "./services/globalContext";
@@ -58,11 +58,18 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!animalForm.description && !animalForm.picture && !animalForm.location) {
+    const { email } = user;
+    const data = { ...animalForm, email };
+
+    if (
+      !animalForm.description &&
+      !animalForm.picture &&
+      !animalForm.location
+    ) {
       alert("please fill in all the fields");
       return;
     }
-    postPawHandler(animalForm);
+    postPawHandler(data);
     dispatch(resetForm());
     setUrl("");
     setProgress(0);
@@ -87,14 +94,17 @@ function App() {
       }
     });
   };
+
   async function postPawHandler(data) {
-    const token = "masterKey";
-    // const token = await getAccessTokenSilently();
+    // const token = "masterKey";
+    const token = await getAccessTokenSilently();
     ApiService.postPaws(data, token); //We still miss the email form somehow
   }
+
   const deletePawsHandler = async (key) => {
+    dispatch(closeModal());
     await ApiService.deletePaws(key); //key is ._id
-    const newPaws = paws.filter(paw => paw._id !== paws._id)
+    const newPaws = paws.filter((paw) => paw._id !== paws._id);
 
     setPaws(newPaws);
   };
@@ -136,8 +146,9 @@ function App() {
   ///////  EXTRAS  //////////
   ///////////////////////////
   const mapAlert = () => {
-    if(process.env.REACT_APP_GOOGLE_MAPS_API_KEY.length > 0) alert('BE CAREFUL YOU HAVE MAPS API WORKING')
-  }
+    if (process.env.REACT_APP_GOOGLE_MAPS_API_KEY.length > 0)
+      alert("BE CAREFUL YOU HAVE MAPS API WORKING");
+  };
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,

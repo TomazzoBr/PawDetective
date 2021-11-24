@@ -1,5 +1,5 @@
-.modelAnimal{
-  position:absolute;
+.modelAnimal {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -7,17 +7,21 @@
 
   background-color: rgba(0, 0, 0, 0.746);
 
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 
-  .container-wrap{
+  .hide-container-wrap {
+    opacity: 0;
+  }
+
+  .container-wrap {
     transition: 0.3s;
-    
+    opacity: 1;
     width: 90vw;
     height: 90vh;
 
-    margin:  5vh auto;
+    margin: 5vh auto;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -26,40 +30,39 @@
 
     background-color: $bg-secondary;
 
-
-    &:hover{
+    &:hover {
       cursor: default;
     }
-    .profile-container{
+    .profile-container {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
 
-      .descr-loc-container{
+      .descr-loc-container {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         align-content: center;
         height: 30vh;
         width: 45vw;
-        background-color:$bg-dark;
+        background-color: $bg-dark;
         border-radius: 20px;
         margin-left: 10px;
         position: relative;
         padding: 10px;
 
-        .stamp{
+        .stamp {
           height: 300px;
           position: absolute;
           bottom: -50px;
           right: -100px;
         }
 
-        .animal-picture{
+        .animal-picture {
           height: 100%;
           width: 28vh;
           display: flex;
-          .pet-picture{
+          .pet-picture {
             height: 25vh;
             width: 25vh;
             padding: 10px;
@@ -69,18 +72,18 @@
           }
         }
 
-        .animal-data{
+        .animal-data {
           font-size: 20px;
           padding: 30px;
           text-transform: capitalize;
 
-          & > p{
+          & > p {
             padding: 10px;
           }
         }
       }
 
-      .map-container{
+      .map-container {
         padding: 20px;
         border: none;
         display: flex;
@@ -89,7 +92,7 @@
       }
     }
 
-    .comment-container{
+    .comment-container {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
@@ -103,7 +106,7 @@
         flex-direction: column;
         justify-content: space-around;
 
-        .block{
+        .block {
           height: 100%;
           width: 100%;
           background-color: $action;
@@ -113,7 +116,7 @@
           flex-direction: column;
           align-content: center;
           padding-top: 20px;
-          .bubble{
+          .bubble {
             color: #000;
             width: 80%;
             height: 30px;
@@ -124,7 +127,7 @@
             line-height: 30px;
           }
         }
-        .input{
+        .input {
           font-size: 20px;
           width: 100%;
           display: flex;
@@ -152,5 +155,4 @@
       }
     }
   }
-
 }

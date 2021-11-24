@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -7,7 +8,6 @@ import {
   changeLocationForm,
 } from "../../actions/index";
 
-// import { useAuth0 } from "@auth0/auth0-react";
 import Map from "../Map/Map";
 import PicturesUpload from "../Pictures/Pictures";
 
@@ -21,6 +21,7 @@ const PawsForm = () => {
   const { lostOrFound, animal, description, location } = animalForm;
 
   const dispatch = useDispatch();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   return (
     <div>
@@ -100,15 +101,6 @@ const PawsForm = () => {
                       dispatch(changeLocationForm(e.target.value));
                     }}
                   />
-                </div>
-                {/* add user email */}
-                <div className="left-form-input">
-                  <label>Your e-mail</label>
-                  <input
-                    name="your-email"
-                    type="email"
-                    placeholder=" Insert your email here"
-                  ></input>
                 </div>
               </div>
               <div className="right-form">

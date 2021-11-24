@@ -10,7 +10,7 @@ interface PawInterface {
   location: string,
   lat: number,
   long: number,
-  // email: string
+  email: string
 }
 
 const PawsSchema = new Schema<PawInterface>({
@@ -22,7 +22,7 @@ const PawsSchema = new Schema<PawInterface>({
   location: { type: String, required: true },
   lat: { type: Number },
   long: { type: Number },
-  // email: { type: String, required: true },
+  email: { type: String, required: true },
 });
 
 export default mongoose.model("Paws", PawsSchema);
