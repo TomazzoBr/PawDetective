@@ -21,27 +21,6 @@ const validObj = {
     long: 2.197904,
 };
 
-const wrongTypesObj = {
-    lostOrFound: false,
-    picture: "https://cdn.britannica.com/q:60/59/173659-131-464B9889/Animal-Mammal-Goat-Ruminant-goat-Capra-aegagrus.jpg",
-    animal: "Other",
-    description: "this is a test",
-    date: Number(Date.now),
-    location: "Barcelona",
-    lat: "1",
-    long: "2",
-};
-
-const invalidObj = {
-    picture: "https://cdn.britannica.com/q:60/59/173659-131-464B9889/Animal-Mammal-Goat-Ruminant-goat-Capra-aegagrus.jpg",
-    animal: "Other",
-    description: "this is a test",
-    date: Number(Date.now),
-    location: "Barcelona",
-    lat: 41.394799,
-    long: 2.197904,
-};
-
 describe ('Server Responses Test', () => {
     
     beforeAll(async () => {
@@ -113,7 +92,7 @@ describe ('Database dataflow test', () => {
         const post = await request.post('/paws').send(validObj);
         const id = post.body._id;
 
-        const deleted = await request.delete(`/paws/${id}`);
+        await request.delete(`/paws/${id}`);
         const res = await request.get('/paws');
         expect(res.body).toEqual([]);
     })

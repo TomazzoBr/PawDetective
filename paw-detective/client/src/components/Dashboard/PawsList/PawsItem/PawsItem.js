@@ -6,7 +6,6 @@ const PawsItem = ({ paw }) => {
 
   return (
     <div key={paw.picture} className="paw-item">
-      {/* <p className="lost-found-title">{paw.lostOrFound}</p> */}
       <div
         style={{ backgroundImage: `url(${paw.picture})` }}
         className="pet-picture"

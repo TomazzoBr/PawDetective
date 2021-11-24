@@ -13,18 +13,12 @@ import { storage } from "./services/firebaseConfig";
 import Dashboard from "./components/Dashboard/Dashboard";
 import PawsForm from "./components/PawsForm/PawsForm";
 import Header from "./components/Dashboard/Header/Header";
-// import ProtectedRoute from "./components/auth/Protected-route";
 
 function App() {
   const dispatch = useDispatch();
 
   const animalForm = useSelector((state) => state.form);
   const image = useSelector((state) => state.image);
-
-  // const {
-  //   user: { email },
-  //   getAccessTokenSilently,
-  // } = useAuth0();
 
   const { user, getAccessTokenSilently } = useAuth0();
 
@@ -96,14 +90,13 @@ function App() {
   };
 
   async function postPawHandler(data) {
-    // const token = "masterKey";
     const token = await getAccessTokenSilently();
-    ApiService.postPaws(data, token); //We still miss the email form somehow
+    ApiService.postPaws(data, token); 
   }
 
   const deletePawsHandler = async (key) => {
     dispatch(closeModal());
-    await ApiService.deletePaws(key); //key is ._id
+    await ApiService.deletePaws(key);
     const newPaws = paws.filter((paw) => paw._id !== paws._id);
 
     setPaws(newPaws);
@@ -159,7 +152,6 @@ function App() {
   ////////////////////////////
   ///////  CONTEXT  //////////
   ///////////////////////////
-  //This is gonna be a massive object and component (Whoever wants to implement redux or modularize functions, here's your time to shine)
   const customProps = {
     // states
     url,
@@ -182,12 +174,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Dashboard />} />
-
-          {/* <Route exact path="/profile/:id" element={<PawsProfile/>} key={document.location.href} /> */}
-
           <Route exact path="/form" element={<PawsForm />} />
-
-          {/* <ProtectedRoute exact path="/form" component={PawsForm} /> */}
         </Routes>
       </div>
     </GlobalContext.Provider>

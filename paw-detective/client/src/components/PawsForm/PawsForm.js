@@ -1,4 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -21,7 +20,6 @@ const PawsForm = () => {
   const { lostOrFound, animal, description, location } = animalForm;
 
   const dispatch = useDispatch();
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   return (
     <div>

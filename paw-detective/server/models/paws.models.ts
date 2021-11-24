@@ -15,7 +15,7 @@ interface PawInterface {
 
 const PawsSchema = new Schema<PawInterface>({
   lostOrFound: { type: Boolean, required: true },
-  picture: { type: String, default: "https://cdn.britannica.com/q:60/59/173659-131-464B9889/Animal-Mammal-Goat-Ruminant-goat-Capra-aegagrus.jpg" },
+  picture: { type: String},
   animal: { type: String, required: true },
   description: { type: String, required: true },
   date: { type: Number, default: Date.now() },

@@ -14,7 +14,11 @@ const PawsProfile = () => {
   const { paws, deletePawsHandler } = customProps;
 
   const { user } = useAuth0();
-  const userEmail = user.email;
+
+  let userEmail;
+  if (user) {
+    userEmail = user.email;
+  }
 
   const selectedAnimal = useSelector((state) => state.modalSelection);
   useEffect(() => {}, [selectedAnimal]);
@@ -110,7 +114,6 @@ const PawsProfile = () => {
                 alt={`a ${animal}`}
               ></img>
             </div>
-            {/* <p className="lost-found-title">{lostOrFound}</p> */}
             <div className="animal-data">
               <h3>Description:</h3>
               <p>{description}</p>

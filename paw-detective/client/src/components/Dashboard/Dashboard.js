@@ -20,12 +20,10 @@ const Dashboard = () => {
   useEffect(() => {}, [selectedAnimal]);
 
   const navigate = useNavigate();
-  // const { user } = useAuth0();
   const modalValue = useSelector((state) => state.modalSelection);
   const modalAnimal = modalValue === "0" ? null : <PawsProfile />;
 
-  const { isAuthenticated, getAccessTokenSilently, loginWithRedirect } =
-    useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   const showForm = () => {
     isAuthenticated
@@ -37,11 +35,7 @@ const Dashboard = () => {
     <div className="dashboard">
       <div className="dash-child" id="left-dash-child">
         <div>
-          <button
-            className="upload-pet-button"
-            onClick={() => showForm()} // replace is an option. let's check what it does,
-            // if nothing special changes, we should use Link
-          >
+          <button className="upload-pet-button" onClick={() => showForm()}>
             Upload Pet
           </button>
         </div>
@@ -65,9 +59,7 @@ const Dashboard = () => {
           <PawsList />
         </div>
       </div>
-
       {modalAnimal}
-      {/* Here goes the modal of animal when click */}
     </div>
   );
 };

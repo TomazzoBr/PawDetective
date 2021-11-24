@@ -54,7 +54,6 @@ const deletePaws = async (req:express.Request, res:express.Response) => {
 
 const putPaws = async (req:express.Request, res:express.Response) => {
   try {
-    //put here
   } catch (error) {
     console.log(error);
     res.status(500);

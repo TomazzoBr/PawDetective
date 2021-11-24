@@ -10,8 +10,6 @@ const Auth0ProviderWithHistory = ({ children }) => {
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
   const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
 
-  //history: redirect the user to a specific url ,
-  //access history obj and push on things
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState) => {

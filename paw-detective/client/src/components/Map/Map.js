@@ -1,9 +1,8 @@
 import { GoogleMap, InfoWindow } from "@react-google-maps/api";
 
 import { formatRelative } from "date-fns";
-import { FaLocationArrow } from "react-icons/fa";
 
-import { useCallback, useRef, useContext } from "react";
+import { useRef, useContext } from "react";
 import { useDispatch } from "react-redux";
 
 import { mapFormCords } from "../../actions/index";
@@ -46,11 +45,6 @@ const Map = ({ profileMarker }) => {
     mapRef.current = map;
   };
 
-  const panTo = useCallback(({ lat, lng }) => {
-    mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(14);
-  }, []);
-
   const mapContainerStyle = {
     width: "25em",
     height: "25em",
@@ -60,31 +54,8 @@ const Map = ({ profileMarker }) => {
     lng: -6.26031,
   };
 
-  const Locate = ({ panTo }) => {
-    return (
-      <button
-        className="compass-button"
-        onClick={() => {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              panTo({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              });
-            },
-            () => null
-          );
-        }}
-      >
-        <FaLocationArrow size={25} />
-      </button>
-    );
-  };
-
   return (
     <div className="map-container">
-      {/* <Locate panTo={panTo} /> */}
-
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={8}
