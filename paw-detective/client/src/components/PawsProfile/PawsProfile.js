@@ -1,5 +1,3 @@
-import "./../../styles/PawsProfile.scss";
-
 import { useContext, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../../actions/index";
@@ -24,7 +22,7 @@ const PawsProfile = () => {
     picture,
     animal,
     description,
-    address,
+    location,
     lat,
     long,
     date,
@@ -41,8 +39,8 @@ const PawsProfile = () => {
     return
   }
 
-  const stamp = lostOrFound 
-    ? 'https://www.lostitfoundit.in/images/loststamp.png' 
+  const stamp = lostOrFound
+    ? 'https://www.lostitfoundit.in/images/loststamp.png'
     : 'https://www.lostitfoundit.in/images/foundstamp.png'
 
   const mockComments = [
@@ -59,7 +57,7 @@ const PawsProfile = () => {
     <div className="modelAnimal" onClick={(e)=>{preventModalClosing(e)}}>
       <div className="container-wrap">
         <div className="profile-container">
-          
+
           <div className="descr-loc-container">
             <div className="animal-picture">
               <img className="pet-picture" src={picture} alt={`a ${animal}`}></img>
@@ -69,7 +67,7 @@ const PawsProfile = () => {
               <h3>Description:</h3>
               <p>{description}</p>
               <h3>Location:</h3>
-              <p>{address}</p>
+              <p>{location}</p>
             </div>
             <img className="stamp" src={stamp} alt={`a ${animal}`}></img>
           </div>
@@ -81,7 +79,6 @@ const PawsProfile = () => {
 
         <div className="comment-container">
           <div className="comment-section">
-            <h3>Comments</h3>
             <div className="block">
               <p>{comments}</p>
             </div>
@@ -90,7 +87,6 @@ const PawsProfile = () => {
                   name="comment"
                   type="text"
                   placeholder="Write your comment..."
-                  value=""
                 />
               <button className="pic-button">Send</button>
             </div>

@@ -1,15 +1,13 @@
 .list-container {
-  background-color: #d4a59a;
-  border: 1px solid #bc4639;
-  border-radius: 5px;
-  width: 450px;
-}
-.descr-loc-container {
-  color: #030303;
-  text-align: left;
-  font-size: medium;
-}
-.click-add-h4 {
-  color: blue;
-  margin-right: 30px;
+  display: flex;
+  flex-wrap:wrap;
+  align-content: flex-start;
+  gap: 20px;
+  padding: 15px 15px;
+  margin: 15px 15px;
+  background-color: $bg-dark;
+  // vertical scrolling
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 80vh;
 }

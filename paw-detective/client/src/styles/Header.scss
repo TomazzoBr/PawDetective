@@ -1,0 +1,35 @@
+.form-header {
+  text-align: left;
+  background-color: $bg-dark;
+  color: $dark;
+  display: flex;
+  justify-content: space-between;
+  height: 90px;
+  padding: 0px 30px;
+}
+
+.title-header {
+  padding-left: 10px;
+}
+
+.login-logo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 30px;
+}
+
+.login-logo a {
+  color: $action;
+  transition: 0.1s;
+
+  &:hover {
+    color: darken($action,8%);
+  }
+}
+
+.account-button {
+  @include btn;
+}
+
+

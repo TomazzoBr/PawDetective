@@ -1,3 +1,43 @@
 .dashboard {
+  display: flex;
 
+  .dash-child {
+    margin: 0px 10px;
+    height: 100%;
+  }
+
+  #left-dash-child {
+    width: 40%;
+    text-align:center;
+
+    .upload-pet-button {
+      @include btn;
+      margin: 20px 20px;
+    }
+  }
+
+  #right-dash-child {
+    width: 60%;
+    text-align: left;
+
+    .lost-found-scroll {
+      width: 200px;
+    }
+
+    .dashboard-list-container label {
+      margin: 15px 20px;
+      font-size: 25px;
+      font-weight: 600;
+    }
+
+    .lost-found-bar {
+      margin: 10px 15px;
+
+      select, select:active, option {
+        @include dropdown;
+        height: 40px;
+        padding-left: 10px;
+      }
+    }
+  }
 }

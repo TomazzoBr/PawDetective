@@ -1,3 +1,41 @@
-.list-container li {
-  background-color: $bg-dark;
+.paw-item {
+  background-color: $bg-secondary;
+  width: 220px;
+  height: 300px;
+  padding: 15px 15px;
+  border-radius: $border-radius;
+  transition: 0.2s ease-in;
+  text-align: center;
+
+  &:hover {
+    transform: scale(1.0)
+  }
+
+  .pet-picture {
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $border-radius;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .descr-loc-container {
+    margin: 15px 15px;
+    font-size: 18px;
+
+    span {
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+  }
+
+  button {
+    @include btn
+  }
 }

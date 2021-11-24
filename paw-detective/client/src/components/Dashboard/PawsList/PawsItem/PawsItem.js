@@ -13,23 +13,19 @@ const PawsItem = ({ paw }) => {
   const {deletePawsHandler} = customProps;
 
   return (
-    <li key={paw.picture}>
-      <p className="lost-found-title">{paw.lostOrFound}</p>
-      <img
-        name={paw._id}
+    <div key={paw.picture} class="paw-item">
+      {/* <p className="lost-found-title">{paw.lostOrFound}</p> */}
+      <div
+        style={{ backgroundImage: `url(${paw.picture})` }}
         className="pet-picture"
-        src={paw.picture}
-        alt={`a ${paw.animal} pic`}
-        onClick={(e)=>{dispatch(openModal(e.target.name))}}
-      ></img>
-      <p>{paw.animal}</p>
+      ></div>
       <div className="descr-loc-container">
-        <h5>Description:</h5>
-        <p>{paw.description}</p>
-        <h5>Location:</h5>
-        <p>{paw.location}</p>
+        <p>Location: <span>{paw.location}</span></p>
       </div>
-      <div className="topic_delete">
+      <div>
+        <button name={paw._id} onClick={(e)=>{dispatch(openModal(e.target.name))}} >See more</button>
+      </div>
+      {/* <div className="topic_delete">
         {
           <button
             className="delete_btn"
@@ -47,8 +43,8 @@ const PawsItem = ({ paw }) => {
             </span>
           </button>
         }
-      </div>
-    </li>
+      </div> */}
+    </div>
   );
 };
 

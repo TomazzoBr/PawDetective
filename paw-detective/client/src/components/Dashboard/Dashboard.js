@@ -7,7 +7,6 @@ import { changeDashboardFilter } from '../../actions/index';
 
 import globalContext from "../../services/globalContext";
 
-import Header from "./Header/Header";
 import Map from "../Map/Map";
 import PawsList from "./PawsList/PawList";
 import PawsProfile from "../PawsProfile/PawsProfile";
@@ -29,24 +28,20 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <Header />
-
-      <button
-        className="upload-pet-button"
-        onClick={() => navigate("/form", { replace: true })} // replace is an option. let's check what it does,
-        // if nothing special changes, we should use Link
-      >
-        Upload Pet
-      </button>
-
-      <div className="list-wrap">
+      <div className="dash-child" id="left-dash-child">
+        <div>
+          <button
+            className="upload-pet-button"
+            onClick={() => navigate("/form", { replace: true })} // replace is an option. let's check what it does,
+            // if nothing special changes, we should use Link
+          >
+          Upload Pet
+          </button>
+        </div>
+        <Map />
+      </div>
+      <div className="dash-child" id="right-dash-child">
         <div className="dashboard-list-container">
-          <div>
-            <h4 style={{ color: "blue" }}>Find your pet</h4>
-          </div>
-
-          <Map />
-
           <label>Lost or Found?</label>
             <div className="lost-found-bar">
               <select
@@ -58,7 +53,6 @@ const Dashboard = () => {
                 <option value="Found">Found</option>
               </select>
             </div>
-
           <PawsList />
         </div>
       </div>

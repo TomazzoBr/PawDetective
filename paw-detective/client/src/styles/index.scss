@@ -2,8 +2,12 @@
 @import './Dashboard';
 @import './PawsList';
 @import './PawsItem';
-@import './Maps';
+@import './PawsForm';
 @import './Pictures';
+@import './PawsProfile';
+@import './Maps';
+@import './Header';
+
 
 // RESET
 
@@ -60,6 +64,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("../assets/images/background.jpg");
+  // background-image: url("../assets/images/background.jpg");
+	background-color: $bg;
 }
 
