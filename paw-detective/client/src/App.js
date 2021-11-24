@@ -102,7 +102,8 @@ function App() {
   ////////////////////////////////////////////////
   //////////  FIREBASE PICTURE UPDATE  ///////////
   ////////////////////////////////////////////////
-  const handleUpload = () => {
+  const handleUpload = (e) => {
+    e.preventDefault();
     if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
       uploadTask.on(

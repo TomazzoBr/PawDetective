@@ -31,7 +31,7 @@ const PicturesUpload = () => {
         />
       </div>
 
-      <button className="pictures-button" onClick={() => handleUpload()}>
+      <button className="pictures-button" onClick={(e) => handleUpload(e)}>
         Upload Picture
       </button>
     </div>

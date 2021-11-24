@@ -12,6 +12,8 @@
   }
 
   .container-wrap{
+    transition: 0.3s;
+    
     width: 90vw;
     height: 90vh;
 
@@ -25,6 +27,9 @@
     background-color: $bg-secondary;
 
 
+    &:hover{
+      cursor: default;
+    }
     .profile-container{
       display: flex;
       flex-direction: column;
