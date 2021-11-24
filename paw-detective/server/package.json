@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "mocha './test/pawsController.test.js'",
-    "start": "nodemon index.ts"
+    "start": "nodemon index.ts",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"  
   },
   "author": "",
   "license": "ISC",
@@ -18,12 +19,16 @@
     "jwks-rsa": "^2.0.5",
     "mongodb": "^4.1.4",
     "mongoose": "^6.0.12",
-    "supertest": "^6.1.6",
     "ts-node": "^10.4.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
+    "@types/jest": "^27.0.3",
+    "@types/supertest": "^2.0.11",
+    "jest": "^27.3.1",
     "nodemon": "^2.0.15",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.0.7",
     "typescript": "^4.5.2"
   }
 }
