@@ -76,7 +76,7 @@ const PawsForm = () => {
       </header>
       <div className="form-container">
         <form className="add-form" onSubmit={handleSubmit}>
-          {/* choose if you lost a pet or found a lost one */}
+          {/* ------------choose if you lost a pet or found a lost one-------------------------- */}
           <div className="form-control">
             <div>
               <h4 style={{ color: "blue" }}>What happened?</h4>
@@ -90,12 +90,12 @@ const PawsForm = () => {
               <option value="Found">Found</option>
             </select>
           </div>
-          {/* add a picture */}
+          {/*------------------------ add a picture------------------------------------------ */}
           <div className="form-control">
             <label>Picture</label>
             <PicturesUpload setPicture={setPicture} />
           </div>
-          {/* choose what kind of animal it is */}
+          {/* -------------------------------choose what kind of animal it is-------------------------- */}
           <div className="form-control">
             <label>Animal</label>
             <select value={animal} onChange={(e) => setAnimal(e.target.value)}>
@@ -106,7 +106,7 @@ const PawsForm = () => {
               <option value="Other">Other</option>
             </select>
           </div>
-          {/* add a description of the animal and any other details */}
+          {/* ---------------------add a description of the animal and any other details------------------- */}
           <div className="form-control">
             <label>Description</label>
             <input
@@ -116,7 +116,7 @@ const PawsForm = () => {
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-          {/* choose the location you lost or found the pet */}
+          {/* -----------------------choose the location you lost or found the pet------------------------------ */}
           <div className="form-control">
             <label>Location</label>
             <input
