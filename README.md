@@ -7,8 +7,8 @@ can be stressfull. Owners are posting on different platforms and groups on socia
 
 Paw Detective is an app specifically dedicated to helping people bring pets back to their families.
 
-<img src="images/pawDetective1.png" alt="home" width="500"/>
-<img src="images/pawDetective2.png" alt="home" width="500"/>
+<img src="paw-detective/images/pawDetective1.png" alt="home" width="500"/>
+<img src="paw-detectve/images/pawDetective2.png" alt="home" width="500"/>
 
 # Getting Started
 
