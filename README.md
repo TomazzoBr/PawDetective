@@ -16,7 +16,7 @@ Paw Detective is an app specifically dedicated to helping people bring pets back
 
 ## 1. Clone the Repo
 
-https://github.com/GregaE/PawDetective.git
+https://github.com/TomazzoBr/PawDetective.git
 
 ## 2. Install dependencies
 
